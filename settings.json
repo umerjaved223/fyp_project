@@ -9,15 +9,15 @@
     "camera_enabled": true,
     "camera_resolution": "720p",
     "camera_refresh_rate": 15,
-    "gas_detection": false,
-    "buzzer": false,
+    "gas_detection": true,
+    "buzzer": true,
     "email_alerts": true,
     "emergency_shutdown": true,
     "dashboard_refresh_rate": 2,
     "auto_logout_minutes": 15,
     "theme": "Dark",
     "alert_email_to": "umergujjarg391@gmail.com",
-    "last_email_sent": "2026-06-29 13:03:25",
+    "last_email_sent": "2026-06-29 15:03:40",
     "devices": [
         {
             "relay": 1,

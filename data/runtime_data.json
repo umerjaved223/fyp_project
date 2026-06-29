@@ -1,92 +1,144 @@
 {
-    "energy_saved_seconds": 0,
+    "energy_saved_seconds": 0.0,
     "energy_saved_kwh": 0.0,
     "event_logs": [
         {
-            "time": "2026-06-29 13:22:32",
+            "time": "2026-06-29 15:47:54",
             "level": "INFO",
             "event": "Human Status Changed: No Human"
         },
         {
-            "time": "2026-06-29 13:22:32",
+            "time": "2026-06-29 15:47:54",
             "level": "INFO",
             "event": "Worker Activity Changed: No Worker"
         },
         {
-            "time": "2026-06-29 13:22:32",
+            "time": "2026-06-29 15:47:58",
             "level": "INFO",
-            "event": "Gas Status Changed: Gas Disabled"
+            "event": "Gas Status Changed: Safe"
         },
         {
-            "time": "2026-06-29 13:22:32",
+            "time": "2026-06-29 15:47:58",
             "level": "WARNING",
             "event": "Device Status Changed: OFF"
         },
         {
-            "time": "2026-06-29 13:24:18",
-            "level": "INFO",
-            "event": "Human Status Changed: Error"
-        },
-        {
-            "time": "2026-06-29 13:24:18",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Error"
-        },
-        {
-            "time": "2026-06-29 13:25:23",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-06-29 13:25:23",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-06-29 13:26:21",
+            "time": "2026-06-29 15:48:12",
             "level": "INFO",
             "event": "Human Status Changed: Human Detected"
         },
         {
-            "time": "2026-06-29 13:26:21",
+            "time": "2026-06-29 15:48:12",
             "level": "INFO",
             "event": "Worker Activity Changed: Worker Working"
         },
         {
-            "time": "2026-06-29 13:26:24",
+            "time": "2026-06-29 15:48:14",
             "level": "INFO",
             "event": "Human Status Changed: No Human"
         },
         {
-            "time": "2026-06-29 13:26:24",
+            "time": "2026-06-29 15:48:14",
             "level": "INFO",
             "event": "Worker Activity Changed: No Worker"
         },
         {
-            "time": "2026-06-29 13:26:37",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
+            "time": "2026-06-29 15:48:18",
+            "level": "SUCCESS",
+            "event": "Device ON (Manual)"
         },
         {
-            "time": "2026-06-29 13:26:37",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
+            "time": "2026-06-29 15:48:18",
+            "level": "SUCCESS",
+            "event": "Device Status Changed: ON"
         },
         {
-            "time": "2026-06-29 13:26:38",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
+            "time": "2026-06-29 15:48:20",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-06-29 13:26:38",
+            "time": "2026-06-29 15:48:21",
+            "level": "WARNING",
+            "event": "Device Status Changed: OFF"
+        },
+        {
+            "time": "2026-06-29 16:16:12",
             "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
+            "event": "Human Status Changed: Human Detected",
+            "human": "Human Detected",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "Worker Working"
+        },
+        {
+            "time": "2026-06-29 16:16:12",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working",
+            "human": "Human Detected",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "Worker Working"
+        },
+        {
+            "time": "2026-06-29 16:16:17",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human",
+            "human": "No Human",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "No Worker"
+        },
+        {
+            "time": "2026-06-29 16:16:19",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker",
+            "human": "No Human",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "No Worker"
+        },
+        {
+            "time": "2026-06-29 16:32:36",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected",
+            "human": "Human Detected",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "Worker Working"
+        },
+        {
+            "time": "2026-06-29 16:32:36",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working",
+            "human": "Human Detected",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "Worker Working"
+        },
+        {
+            "time": "2026-06-29 16:32:40",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human",
+            "human": "No Human",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "No Worker"
+        },
+        {
+            "time": "2026-06-29 16:32:40",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker",
+            "human": "No Human",
+            "gas": "Safe",
+            "device": "OFF",
+            "worker": "No Worker"
         }
     ],
     "last_event_state": {
         "human": "No Human",
         "worker": "No Worker",
-        "gas": "Gas Disabled",
+        "gas": "Safe",
         "device": "OFF"
     },
     "weekly_energy_data": {
