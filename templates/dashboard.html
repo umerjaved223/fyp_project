@@ -1,0 +1,3062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Energy Saving System</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+    --bg:#050b18;
+    --sidebar:#071326;
+    --panel:#0b1a35;
+    --card:#0f2144;
+    --card2:#132a55;
+    --line:rgba(125,170,255,.18);
+    --text:#ffffff;
+    --muted:#95a5c9;
+    --blue:#2f8cff;
+    --cyan:#00d9ff;
+    --purple:#8b5cf6;
+    --green:#00ff88;
+    --red:#ff3366;
+    --yellow:#ffb800;
+    --orange:#ff7a18;
+}
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 20% 0%,rgba(139,92,246,.28),transparent 35%),
+        radial-gradient(circle at 85% 0%,rgba(0,217,255,.16),transparent 30%),
+        linear-gradient(135deg,#020817,#071733);
+    color:var(--text);
+    min-height:100vh;
+}
+.app{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    min-height:100vh;
+}
+
+/* Sidebar */
+.sidebar{
+    background:rgba(7,19,38,.96);
+    border-right:1px solid var(--line);
+    padding:18px 14px;
+    position:sticky;
+    top:0;
+    height:100vh;
+}
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:24px;
+}
+.logo{
+    width:46px;
+    height:46px;
+    border-radius:15px;
+    background:linear-gradient(135deg,#00d9ff,#8b5cf6);
+    display:grid;
+    place-items:center;
+    box-shadow:0 0 28px rgba(139,92,246,.45);
+}
+.logo svg{width:25px;height:25px}
+.brand h2{font-size:17px;line-height:1.25}
+.nav-btn{
+    width:100%;
+    border:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:transparent;
+    color:#dce8ff;
+    padding:12px 14px;
+    border-radius:13px;
+    margin-bottom:7px;
+    font-size:14px;
+    cursor:pointer;
+    text-align:left;
+    transition:.22s;
+}
+.nav-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2}
+.nav-btn.active,.nav-btn:hover{
+    background:linear-gradient(135deg,#1276ff,#7c3aed);
+    box-shadow:0 8px 24px rgba(47,140,255,.22);
+}
+.side-health{
+    margin-top:18px;
+    background:rgba(15,33,68,.75);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:16px;
+    text-align:center;
+}
+.health-ring{
+    width:108px;height:108px;
+    border-radius:50%;
+    margin:13px auto 8px;
+    background:conic-gradient(var(--green) 0 342deg,rgba(255,255,255,.08) 342deg 360deg);
+    display:grid;
+    place-items:center;
+}
+.health-inner{
+    width:78px;height:78px;
+    border-radius:50%;
+    background:#071733;
+    display:grid;
+    place-items:center;
+    font-size:25px;
+    font-weight:900;
+}
+
+/* Main */
+.main{padding:18px 22px}
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+.welcome h1{font-size:28px}
+.welcome span{color:#9b5cff}
+.welcome p{color:var(--muted);font-size:14px;margin-top:4px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.pill{
+    padding:10px 14px;
+    border-radius:13px;
+    background:rgba(15,33,68,.78);
+    border:1px solid var(--line);
+    color:#e6efff;
+    font-weight:700;
+    font-size:13px;
+}
+.dot{
+    display:inline-block;width:9px;height:9px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+    margin-right:7px;
+}
+.time-pill{text-align:right}
+#current-time{
+    color:#9b5cff;
+    font-size:20px;
+    font-weight:900;
+}
+.logout{
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(135deg,#ff3366,#ff3b30);
+    padding:11px 16px;
+    border-radius:12px;
+    font-weight:800;
+}
+
+/* Shared */
+.card{
+    background:linear-gradient(180deg,rgba(15,33,68,.92),rgba(8,22,49,.9));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 18px 45px rgba(0,0,0,.25);
+}
+.card h2{font-size:18px;margin-bottom:14px}
+.section{display:none}
+.section.active{display:block}
+.grid{
+    display:grid;
+    grid-template-columns:1.35fr .8fr;
+    gap:18px;
+}
+.status-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:18px;
+}
+.stat{
+    min-height:116px;
+    background:linear-gradient(135deg,rgba(47,140,255,.20),rgba(139,92,246,.12));
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:16px;
+    position:relative;
+    overflow:hidden;
+}
+.stat::after{
+    content:"";
+    width:120px;height:120px;border-radius:50%;
+    position:absolute;right:-40px;bottom:-50px;
+    background:radial-gradient(circle,rgba(255,255,255,.09),transparent 65%);
+}
+.stat-top{display:flex;align-items:center;gap:12px}
+.icon-box{
+    width:42px;height:42px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.08);
+}
+.icon-box svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:2.2}
+.stat-title{font-size:14px;font-weight:800}
+.stat-sub{font-size:12px;color:var(--muted)}
+.stat-value{font-size:28px;font-weight:900;margin-top:14px}
+.mini-line{height:20px;margin-top:8px}
+.mini-line svg{width:100%;height:100%}
+.sensor-item,.device-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    background:rgba(5,14,32,.62);
+    border:1px solid rgba(255,255,255,.07);
+    padding:13px;
+    border-radius:14px;
+    margin-top:9px;
+}
+.sensor-left{display:flex;align-items:center;gap:10px}
+.sensor-icon{
+    width:35px;height:35px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    background:rgba(47,140,255,.16);
+}
+.sensor-icon svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2}
+.value,.sensor-value{font-weight:900;font-size:18px}
+.success{color:var(--green)!important}
+.danger{color:var(--red)!important}
+.warning{color:var(--yellow)!important}
+.primary{color:var(--cyan)!important}
+
+/* Camera */
+.video-wrap{
+    height:430px;
+    background:#000;
+    border-radius:16px;
+    overflow:hidden;
+    position:relative;
+    border:1px solid rgba(255,255,255,.10);
+}
+.camera-stream{width:100%;height:100%;object-fit:cover}
+.live-badge{
+    position:absolute;
+    top:13px;right:13px;
+    background:rgba(0,255,136,.15);
+    color:var(--green);
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:900;
+}
+.fps{
+    position:absolute;top:13px;left:13px;
+    background:rgba(0,0,0,.6);
+    color:var(--green);
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:800;
+}
+.overlay{
+    position:absolute;left:13px;right:13px;bottom:13px;
+    display:flex;
+    justify-content:space-between;
+    background:rgba(0,0,0,.58);
+    border-radius:13px;
+    padding:13px;
+    backdrop-filter:blur(8px);
+}
+.overlay small{color:#c8d4ef}
+
+/* Gauges and charts */
+.energy-card{
+    min-height:290px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.gauge{
+    width:180px;height:90px;
+    border-radius:180px 180px 0 0;
+    border:17px solid rgba(255,255,255,.08);
+    border-bottom:0;
+    position:relative;
+    margin-bottom:14px;
+}
+.gauge::after{
+    content:"";
+    position:absolute;inset:-17px;
+    border-radius:180px 180px 0 0;
+    border:17px solid transparent;
+    border-bottom:0;
+    border-left-color:#8b5cf6;
+    border-top-color:#8b5cf6;
+    border-right-color:#2f8cff;
+    filter:drop-shadow(0 0 15px rgba(139,92,246,.55));
+}
+.big-kwh{font-size:34px;font-weight:900}
+.progress{
+    width:100%;
+    height:12px;
+    background:rgba(255,255,255,.08);
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:18px;
+}
+.progress span{
+    display:block;
+    width:70%;
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,#8b5cf6,#2f8cff);
+}
+.chart-box{
+    height:260px;
+    background:rgba(5,14,32,.45);
+    border-radius:16px;
+    padding:12px;
+}
+.chart-box svg{width:100%;height:100%}
+.gridline{stroke:rgba(255,255,255,.08)}
+.line-path{fill:none;stroke:#8b5cf6;stroke-width:3;filter:drop-shadow(0 0 8px rgba(139,92,246,.8))}
+.area{fill:url(#grad)}
+.bar{fill:url(#barGrad);rx:5}
+
+/* Logs */
+.logs-container{
+    max-height:380px;
+    overflow:auto;
+    background:rgba(5,14,32,.5);
+    border-radius:15px;
+    padding:12px;
+    font-family:Consolas,monospace;
+}
+.log-entry{
+    display:flex;
+    gap:13px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:10px 0;
+    font-size:13px;
+}
+
+/* Device */
+.toggle-switch{
+    width:58px;height:31px;
+    border-radius:20px;
+    background:rgba(255,255,255,.18);
+    position:relative;
+    cursor:pointer;
+}
+.toggle-switch::after{
+    content:"";
+    width:25px;height:25px;
+    border-radius:50%;
+    background:white;
+    position:absolute;
+    top:3px;left:3px;
+    transition:.25s;
+}
+.toggle-switch.active{background:linear-gradient(135deg,#00ff88,#00d9ff)}
+.toggle-switch.active::after{left:30px}
+.toggle-switch.disabled{opacity:.45}
+.btn{
+    width:100%;
+    border:0;
+    border-radius:13px;
+    padding:13px;
+    margin-top:12px;
+    font-weight:900;
+    cursor:pointer;
+}
+.red{background:linear-gradient(135deg,#ff3366,#ff3b30);color:#fff}
+.yellow{background:linear-gradient(135deg,#ffb800,#ffdf4d);color:#111}
+.emergency-alert{
+    display:none;
+    border:1px solid rgba(255,51,102,.55);
+    background:rgba(255,51,102,.15);
+    border-radius:16px;
+    padding:14px;
+    margin-bottom:16px;
+}
+.emergency-alert.active{display:block}
+.toast{
+    position:fixed;right:25px;bottom:25px;
+    background:#071733;color:var(--yellow);
+    border:1px solid var(--yellow);
+    padding:14px 20px;border-radius:12px;
+    display:none;z-index:999;
+}
+.toast.show{display:block}
+.footer{
+    margin-top:18px;
+    background:rgba(15,33,68,.78);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:14px 18px;
+    display:flex;
+    justify-content:space-between;
+    color:#cdd8f4;
+    font-size:13px;
+}
+@media(max-width:1050px){
+    .app{grid-template-columns:1fr}
+    .sidebar{position:relative;height:auto}
+    .grid,.status-grid{grid-template-columns:1fr}
+}
+
+.pi-logo{
+    background:rgba(255,45,117,.12)!important;
+    box-shadow:0 0 26px rgba(255,45,117,.35)!important;
+}
+.pi-logo svg{
+    width:36px!important;
+    height:36px!important;
+}
+.side-health{
+    margin-top:12px!important;
+    padding:13px!important;
+}
+.health-ring{
+    width:96px!important;
+    height:96px!important;
+}
+.health-inner{
+    width:70px!important;
+    height:70px!important;
+    font-size:22px!important;
+}
+
+
+
+.sensor-icon{
+    color:#78b7ff;
+}
+.sensor-icon svg{
+    width:19px;
+    height:19px;
+}
+
+
+/* ===== FIT SCREEN FIX: browser zoom 100%, UI behaves like 67% zoom ===== */
+:root{ --ui-scale:0.67; }
+
+.app{
+    width:calc(100vw / var(--ui-scale)) !important;
+    height:auto !important;
+    min-height:auto !important;
+    transform:scale(var(--ui-scale));
+    transform-origin:top left;
+}
+
+body{
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+}
+/* remove white shine effects */
+.card::before,.stat::before,.card-shine::before{display:none!important;content:none!important}
+
+
+.pi-logo{
+    background:rgba(255,45,117,.12)!important;
+    box-shadow:0 0 26px rgba(255,45,117,.35)!important;
+}
+.pi-logo svg{width:36px!important;height:36px!important}
+.icon-svg,.sensor-icon svg,.icon-box svg{
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.sensor-icon{
+    color:#6db7ff;
+    background:rgba(47,140,255,.16)!important;
+}
+.sensor-icon.success-icon{color:#00ff88;background:rgba(0,255,136,.13)!important}
+.sensor-icon.danger-icon{color:#ff3366;background:rgba(255,51,102,.13)!important}
+.sensor-icon.warning-icon{color:#ffb800;background:rgba(255,184,0,.13)!important}
+
+
+.nav-btn{padding:9px 12px!important;margin-bottom:5px!important}
+.side-health{margin-top:10px!important;padding:12px!important}
+.health-ring{width:88px!important;height:88px!important;margin:9px auto 6px!important}
+.health-inner{width:64px!important;height:64px!important;font-size:20px!important}
+.sidebar{padding-top:12px!important}
+.brand{margin-bottom:14px!important}
+
+
+/* ===== POLISH FIXES: 67% HACK PRESERVED ===== */
+.heading-icon{
+    width:32px;
+    height:32px;
+    border-radius:10px;
+    display:inline-grid;
+    place-items:center;
+    margin-right:8px;
+    vertical-align:middle;
+    background:rgba(47,140,255,.16);
+}
+.heading-icon svg{
+    width:19px;
+    height:19px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.heading-icon.green{color:var(--green);background:rgba(0,255,136,.13)}
+.heading-icon.red{color:var(--red);background:rgba(255,51,102,.13)}
+.heading-icon.orange{color:var(--yellow);background:rgba(255,184,0,.13)}
+.heading-icon.purple{color:var(--purple);background:rgba(139,92,246,.18)}
+.heading-icon.cyan{color:var(--cyan);background:rgba(0,217,255,.13)}
+
+.card,.stat,.pill,.side-health,.footer{
+    background:linear-gradient(180deg,rgba(15,33,68,.68),rgba(8,22,49,.55))!important;
+    backdrop-filter:blur(16px)!important;
+    -webkit-backdrop-filter:blur(16px)!important;
+    border:1px solid rgba(125,170,255,.22)!important;
+}
+
+.sensor-icon svg,.icon-box svg,.nav-btn svg{
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+}
+.sensor-icon.success-icon{color:#00ff88;background:rgba(0,255,136,.13)!important}
+.sensor-icon.danger-icon{color:#ff3366;background:rgba(255,51,102,.13)!important}
+.sensor-icon.warning-icon{color:#ffb800;background:rgba(255,184,0,.13)!important}
+
+.pi-health-top{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-bottom:16px;
+}
+.mini-health-ring{
+    width:135px;
+    height:135px;
+    border-radius:50%;
+    background:conic-gradient(var(--green) 0 342deg,rgba(255,255,255,.08) 342deg 360deg);
+    display:grid;
+    place-items:center;
+    box-shadow:0 0 30px rgba(0,255,136,.20);
+}
+.mini-health-ring div{
+    width:95px;
+    height:95px;
+    border-radius:50%;
+    background:#071733;
+    display:grid;
+    place-items:center;
+    text-align:center;
+}
+.mini-health-ring strong{font-size:28px}
+.mini-health-ring span{color:var(--green);font-weight:800;font-size:13px}
+.health-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.log-badge{
+    padding:3px 8px;
+    border-radius:8px;
+    font-weight:900;
+    font-size:12px;
+}
+.log-badge.info{background:rgba(0,217,255,.13);color:var(--cyan)}
+.log-badge.success{background:rgba(0,255,136,.13);color:var(--green)}
+.log-badge.warning{background:rgba(255,184,0,.13);color:var(--yellow)}
+.log-badge.danger{background:rgba(255,51,102,.13);color:var(--red)}
+.log-time{color:var(--muted);min-width:86px}
+.professional-logs{background:rgba(5,14,32,.55)!important}
+
+.camera-offline{
+    display:none;
+    height:100%;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:22px;
+    font-weight:900;
+    background:
+        radial-gradient(circle at center,rgba(47,140,255,.18),transparent 45%),
+        #050816;
+    text-align:center;
+}
+/* ===== RESPONSIVE FIX: LAPTOP OK + MOBILE/TABLET AUTO ADJUST ===== */
+
+/* 67% hack disable */
+:root{
+    --ui-scale:1;
+}
+
+html, body{
+    width:100%;
+    overflow-x:hidden !important;
+}
+
+.app{
+    width:100% !important;
+    min-height:100vh !important;
+    transform:none !important;
+    transform-origin:initial !important;
+}
+
+/* Laptop */
+@media (min-width:1025px){
+    .app{
+        display:grid !important;
+        grid-template-columns:240px minmax(0,1fr) !important;
+    }
+
+    .status-grid{
+        grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    }
+
+    .grid{
+        grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr) !important;
+    }
+
+    .main{
+        padding:16px !important;
+    }
+
+    .video-wrap{
+        height:400px !important;
+    }
+
+    .stat-value{
+        font-size:24px !important;
+    }
+}
+
+/* Tablet */
+@media (max-width:1024px){
+    .app{
+        display:block !important;
+    }
+
+    .sidebar{
+        position:sticky !important;
+        top:0 !important;
+        z-index:999 !important;
+        height:auto !important;
+        width:100% !important;
+        overflow-x:auto !important;
+        white-space:nowrap !important;
+        border-right:none !important;
+        border-bottom:1px solid rgba(125,170,255,.22) !important;
+    }
+
+    .side-health{
+        display:none !important;
+    }
+
+    .brand{
+        display:inline-flex !important;
+        margin-right:12px !important;
+        margin-bottom:0 !important;
+    }
+
+    .nav-btn{
+        display:inline-flex !important;
+        width:auto !important;
+        margin:4px !important;
+        padding:10px 12px !important;
+        white-space:nowrap !important;
+    }
+
+    .topbar{
+        flex-direction:column !important;
+        align-items:stretch !important;
+        gap:12px !important;
+    }
+
+    .top-actions{
+        display:grid !important;
+        grid-template-columns:repeat(2,1fr) !important;
+        gap:8px !important;
+    }
+
+    .status-grid{
+        grid-template-columns:repeat(2,1fr) !important;
+    }
+
+    .grid{
+        grid-template-columns:1fr !important;
+    }
+
+    .health-grid{
+        grid-template-columns:repeat(2,1fr) !important;
+    }
+}
+
+/* Mobile */
+@media (max-width:600px){
+    .main{
+        padding:12px !important;
+    }
+
+    .welcome{
+        padding:14px !important;
+        border-radius:18px !important;
+        background:rgba(15,33,68,.55) !important;
+        border:1px solid rgba(125,170,255,.18) !important;
+    }
+
+    .welcome h1{
+        font-size:21px !important;
+    }
+
+    .welcome p{
+        font-size:12px !important;
+    }
+
+    .top-actions{
+        grid-template-columns:repeat(2,1fr) !important;
+    }
+
+    .status-grid{
+        grid-template-columns:repeat(2,1fr) !important;
+        gap:10px !important;
+    }
+
+    .stat{
+        min-height:105px !important;
+        padding:12px !important;
+        border-radius:18px !important;
+    }
+
+    .stat-title{
+        font-size:12px !important;
+    }
+
+    .stat-sub{
+        font-size:10px !important;
+    }
+
+    .stat-value{
+        font-size:21px !important;
+    }
+
+    .icon-box{
+        width:34px !important;
+        height:34px !important;
+    }
+
+    .icon-box svg{
+        width:18px !important;
+        height:18px !important;
+    }
+
+    .video-wrap{
+        height:280px !important;
+    }
+
+    .overlay{
+        left:8px !important;
+        right:8px !important;
+        bottom:8px !important;
+        padding:10px !important;
+    }
+
+    .overlay small{
+        font-size:10px !important;
+    }
+
+    .value,
+    .sensor-value{
+        font-size:14px !important;
+    }
+
+    .card{
+        padding:14px !important;
+        border-radius:20px !important;
+    }
+
+    .sensor-item,
+    .device-item{
+        padding:11px !important;
+    }
+
+    .health-grid{
+        grid-template-columns:repeat(2,1fr) !important;
+    }
+
+    .footer{
+        flex-direction:column !important;
+        gap:7px !important;
+        text-align:center !important;
+    }
+}
+
+/* Very small phone */
+@media (max-width:390px){
+    .status-grid,
+    .top-actions,
+    .health-grid{
+        grid-template-columns:1fr !important;
+    }
+
+    .video-wrap{
+        height:245px !important;
+    }
+}
+/* Remove huge empty space */
+.main{
+    min-height:auto !important;
+    height:auto !important;
+}
+
+.section{
+    min-height:auto !important;
+    height:auto !important;
+}
+
+#dashboard{
+    min-height:auto !important;
+    height:auto !important;
+}
+
+.footer{
+    margin-top:20px !important;
+}
+
+.grid{
+    align-items:start !important;
+}
+
+/* ===== PROFESSIONAL SETTINGS PAGE ===== */
+.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.settings-card{background:linear-gradient(180deg,rgba(15,33,68,.78),rgba(8,22,49,.62));border:1px solid rgba(125,170,255,.22);border-radius:18px;padding:18px}
+.settings-card h3{font-size:17px;margin-bottom:12px}.setting-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}.setting-row:last-child{border-bottom:0}.setting-row label{font-weight:800}.setting-row small{display:block;color:var(--muted);margin-top:3px}.setting-input,.setting-select{width:190px;border:1px solid rgba(125,170,255,.22);background:#071733;color:#fff;border-radius:12px;padding:10px 12px;outline:none}.setting-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.btn-blue{background:linear-gradient(135deg,#2f8cff,#00d9ff);color:#fff}.btn-green{background:linear-gradient(135deg,#00ff88,#00d9ff);color:#071733}.btn-purple{background:linear-gradient(135deg,#8b5cf6,#2f8cff);color:#fff}.settings-note{margin-bottom:16px;color:var(--muted);line-height:1.5}@media(max-width:900px){.settings-grid{grid-template-columns:1fr}.setting-row{flex-direction:column;align-items:stretch}.setting-input,.setting-select{width:100%}.setting-actions{grid-template-columns:1fr}}
+
+</style>
+
+<style>
+.backend-banner{
+position:fixed;top:10px;left:50%;transform:translateX(-50%);
+z-index:9999;padding:10px 18px;border-radius:12px;
+font-weight:800;display:none;color:white;
+background:#dc2626;box-shadow:0 0 15px rgba(0,0,0,.3);
+}
+.backend-banner.online{background:#16a34a;}
+</style>
+
+<style>
+
+/* ===== PREMIUM SETTINGS REDESIGN ===== */
+.settings-hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:18px;
+    padding:22px;
+    margin-bottom:18px;
+    border-radius:22px;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(0,217,255,.20), transparent 35%),
+        radial-gradient(circle at 90% 0%, rgba(139,92,246,.30), transparent 35%),
+        linear-gradient(135deg,rgba(15,33,68,.86),rgba(8,22,49,.68));
+    border:1px solid rgba(125,170,255,.26);
+    box-shadow:0 24px 60px rgba(0,0,0,.30);
+}
+.settings-hero-left{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+.settings-hero-icon{
+    width:64px;
+    height:64px;
+    border-radius:20px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#2f8cff,#8b5cf6);
+    box-shadow:0 0 34px rgba(139,92,246,.45);
+}
+.settings-hero-icon svg{
+    width:34px;
+    height:34px;
+    stroke:#fff;
+    fill:none;
+    stroke-width:2.3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.settings-hero h2{
+    font-size:25px;
+    margin:0 0 4px 0;
+}
+.settings-hero p{
+    margin:0;
+    color:var(--muted);
+    line-height:1.5;
+}
+.settings-save-top{
+    min-width:190px;
+    border:0;
+    padding:14px 18px;
+    border-radius:15px;
+    font-weight:900;
+    cursor:pointer;
+    color:#071733;
+    background:linear-gradient(135deg,#00ff88,#00d9ff);
+    box-shadow:0 14px 32px rgba(0,255,136,.20);
+}
+.settings-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+}
+.settings-card{
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(180deg,rgba(15,33,68,.82),rgba(8,22,49,.62));
+    border:1px solid rgba(125,170,255,.22);
+    border-radius:22px;
+    padding:18px;
+    box-shadow:0 18px 45px rgba(0,0,0,.22);
+}
+.settings-card::after{
+    content:"";
+    position:absolute;
+    width:130px;
+    height:130px;
+    right:-60px;
+    top:-60px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(47,140,255,.18),transparent 70%);
+}
+.settings-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+}
+.settings-title-icon{
+    width:43px;
+    height:43px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    background:rgba(47,140,255,.16);
+    color:#79bdff;
+}
+.settings-title-icon.green{background:rgba(0,255,136,.12);color:#00ff88}
+.settings-title-icon.red{background:rgba(255,51,102,.12);color:#ff3366}
+.settings-title-icon.yellow{background:rgba(255,184,0,.12);color:#ffb800}
+.settings-title-icon.purple{background:rgba(139,92,246,.18);color:#a78bfa}
+.settings-title-icon svg{
+    width:23px;
+    height:23px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.settings-title h3{
+    margin:0;
+    font-size:18px;
+}
+.settings-title span{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+    margin-top:2px;
+}
+.setting-row{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding:13px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+.setting-row:last-child{border-bottom:0}
+.setting-row label{
+    font-weight:900;
+    font-size:14px;
+}
+.setting-row small{
+    display:block;
+    color:var(--muted);
+    margin-top:4px;
+    line-height:1.35;
+}
+.setting-input,.setting-select{
+    min-width:185px;
+    border:1px solid rgba(125,170,255,.26);
+    background:rgba(5,14,32,.82);
+    color:#fff;
+    border-radius:14px;
+    padding:11px 13px;
+    outline:none;
+    font-weight:800;
+}
+.setting-input:focus,.setting-select:focus{
+    border-color:#00d9ff;
+    box-shadow:0 0 0 3px rgba(0,217,255,.12);
+}
+.settings-actions{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:12px;
+}
+.settings-mini-btn{
+    border:0;
+    border-radius:14px;
+    padding:12px;
+    font-weight:900;
+    cursor:pointer;
+    color:#fff;
+    background:linear-gradient(135deg,#2f8cff,#8b5cf6);
+}
+.settings-mini-btn.green{
+    color:#071733;
+    background:linear-gradient(135deg,#00ff88,#00d9ff);
+}
+.settings-mini-btn.yellow{
+    color:#111827;
+    background:linear-gradient(135deg,#ffb800,#ffdf4d);
+}
+.settings-mini-btn.red{
+    background:linear-gradient(135deg,#ff3366,#ff3b30);
+}
+.settings-footer-save{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+@media(max-width:900px){
+    .settings-hero{flex-direction:column;align-items:stretch}
+    .settings-grid{grid-template-columns:1fr}
+    .setting-row{flex-direction:column;align-items:stretch}
+    .setting-input,.setting-select{width:100%;min-width:0}
+    .settings-actions,.settings-footer-save{grid-template-columns:1fr}
+}
+
+</style>
+<style>
+.relay-list-item{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:11px 12px;margin-top:8px;border-radius:14px;
+    background:rgba(5,14,32,.62);border:1px solid rgba(125,170,255,.16);
+}
+.relay-list-item strong{display:block}
+.relay-list-item small{color:var(--muted)}
+.relay-badge{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900}
+.relay-badge.online{background:rgba(0,255,136,.13);color:var(--green)}
+.relay-badge.pending{background:rgba(255,184,0,.13);color:var(--yellow)}
+</style>
+<style>
+/* ===== EMAIL + REPORT SETTINGS FINAL ===== */
+.report-action-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:12px;
+}
+.last-email-box{
+    color:var(--cyan);
+    font-weight:900;
+    word-break:break-word;
+}
+body.light-theme{
+    --bg:#f4f7fb;
+    --sidebar:#ffffff;
+    --panel:#ffffff;
+    --card:#ffffff;
+    --card2:#eef3fb;
+    --line:rgba(30,64,175,.18);
+    --text:#111827;
+    --muted:#64748b;
+}
+body.light-theme{
+    background:linear-gradient(135deg,#f8fafc,#e2e8f0)!important;
+}
+body.light-theme .card,
+body.light-theme .settings-card,
+body.light-theme .stat,
+body.light-theme .pill,
+body.light-theme .footer,
+body.light-theme .side-health{
+    background:#ffffff!important;
+    color:#111827!important;
+}
+body.light-theme .sidebar{
+    background:#ffffff!important;
+}
+body.light-theme .setting-input,
+body.light-theme .setting-select{
+    background:#f8fafc!important;
+    color:#111827!important;
+}
+</style>
+<style>
+/* ===== FINAL HAMBURGER MOBILE MENU FIX ===== */
+.mobile-menu-btn,
+.mobile-menu-backdrop{
+    display:none;
+}
+
+@media(max-width:1024px){
+    .app{
+        display:block!important;
+        width:100%!important;
+        transform:none!important;
+    }
+
+    .mobile-menu-btn{
+        display:grid!important;
+        place-items:center!important;
+        position:fixed!important;
+        top:12px!important;
+        left:12px!important;
+        z-index:10001!important;
+        width:46px!important;
+        height:46px!important;
+        border:1px solid rgba(125,170,255,.28)!important;
+        border-radius:14px!important;
+        background:linear-gradient(135deg,#1276ff,#7c3aed)!important;
+        box-shadow:0 12px 30px rgba(0,0,0,.35)!important;
+        color:#fff!important;
+        cursor:pointer!important;
+    }
+    .mobile-menu-btn svg{
+        width:25px!important;
+        height:25px!important;
+        fill:none!important;
+        stroke:#fff!important;
+        stroke-width:2.4!important;
+        stroke-linecap:round!important;
+    }
+
+    .mobile-menu-backdrop{
+        position:fixed!important;
+        inset:0!important;
+        z-index:9998!important;
+        background:rgba(0,0,0,.55)!important;
+        backdrop-filter:blur(3px)!important;
+    }
+    body.menu-open .mobile-menu-backdrop{
+        display:block!important;
+    }
+
+    .sidebar{
+        position:fixed!important;
+        top:0!important;
+        left:0!important;
+        bottom:0!important;
+        width:285px!important;
+        height:100vh!important;
+        z-index:9999!important;
+        transform:translateX(-105%)!important;
+        transition:transform .28s ease!important;
+        overflow-y:auto!important;
+        overflow-x:hidden!important;
+        white-space:normal!important;
+        padding:18px 14px!important;
+        border-right:1px solid rgba(125,170,255,.25)!important;
+        border-bottom:none!important;
+        background:rgba(7,19,38,.98)!important;
+    }
+    body.menu-open .sidebar{
+        transform:translateX(0)!important;
+    }
+
+    .sidebar .brand{
+        display:flex!important;
+        width:100%!important;
+        justify-content:flex-start!important;
+        margin:0 0 20px 0!important;
+    }
+
+    .sidebar .nav-btn{
+        display:flex!important;
+        width:100%!important;
+        justify-content:flex-start!important;
+        align-items:center!important;
+        margin:0 0 7px 0!important;
+        padding:12px 14px!important;
+        font-size:14px!important;
+        gap:12px!important;
+        border:none!important;
+        background:transparent!important;
+    }
+    .sidebar .nav-btn.active,
+    .sidebar .nav-btn:hover{
+        background:linear-gradient(135deg,#1276ff,#7c3aed)!important;
+    }
+    .sidebar .nav-btn svg{
+        width:19px!important;
+        height:19px!important;
+        flex:0 0 auto!important;
+        fill:none!important;
+        stroke:currentColor!important;
+        stroke-width:2.2!important;
+        stroke-linecap:round!important;
+        stroke-linejoin:round!important;
+    }
+
+    .side-health{
+        display:block!important;
+    }
+
+    .main{
+        padding:70px 12px 12px 12px!important;
+        width:100%!important;
+    }
+
+    .topbar{
+        flex-direction:column!important;
+        align-items:stretch!important;
+        gap:12px!important;
+    }
+
+    .top-actions{
+        display:grid!important;
+        grid-template-columns:repeat(2,1fr)!important;
+        gap:8px!important;
+    }
+
+    .status-grid{
+        grid-template-columns:repeat(2,1fr)!important;
+    }
+
+    .grid{
+        grid-template-columns:1fr!important;
+    }
+}
+
+@media(max-width:430px){
+    .sidebar{
+        width:82vw!important;
+        max-width:310px!important;
+    }
+    .welcome h1{
+        font-size:21px!important;
+        padding-left:44px!important;
+    }
+    .status-grid,
+    .top-actions{
+        grid-template-columns:1fr!important;
+    }
+    .video-wrap{
+        height:280px!important;
+    }
+}
+
+/* Keep settings icon as real gear */
+.settings-hero-icon svg,
+.settings-title-icon svg,
+.nav-btn svg{
+    fill:none!important;
+    stroke:currentColor!important;
+    stroke-width:2.2!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+}
+.settings-hero-icon svg{
+    stroke:#fff!important;
+}
+</style>
+<style>
+/* ===== FINAL MOBILE HAMBURGER POSITION + NO BLUR FIX ===== */
+@media(max-width:1024px){
+    .mobile-menu-btn{
+        top:72px!important;
+        left:16px!important;
+        width:50px!important;
+        height:50px!important;
+        border-radius:15px!important;
+        z-index:10002!important;
+    }
+
+    .mobile-menu-backdrop{
+        background:rgba(0,0,0,.35)!important;
+        backdrop-filter:none!important;
+        -webkit-backdrop-filter:none!important;
+    }
+
+    body:not(.menu-open) .mobile-menu-backdrop{
+        display:none!important;
+        pointer-events:none!important;
+        opacity:0!important;
+    }
+
+    body.menu-open .mobile-menu-backdrop{
+        display:block!important;
+        opacity:1!important;
+        pointer-events:auto!important;
+    }
+
+    .main{
+        padding-top:138px!important;
+    }
+
+    .welcome{
+        padding-left:0!important;
+    }
+
+    .welcome h1{
+        padding-left:0!important;
+    }
+}
+
+@media(max-width:430px){
+    .mobile-menu-btn{
+        top:76px!important;
+        left:18px!important;
+    }
+
+    .main{
+        padding-top:142px!important;
+    }
+
+    .welcome h1{
+        padding-left:0!important;
+    }
+}
+</style>
+<style>
+/* ===== FINAL MOBILE HAMBURGER CLEAN POSITION FIX ===== */
+@media(max-width:1024px){
+    .mobile-menu-btn{
+        top:16px!important;
+        left:16px!important;
+        width:50px!important;
+        height:50px!important;
+        border-radius:15px!important;
+        z-index:10002!important;
+    }
+
+    body.menu-open .mobile-menu-btn{
+        display:none!important;
+    }
+
+    .mobile-menu-backdrop{
+        background:rgba(0,0,0,.35)!important;
+        backdrop-filter:none!important;
+        -webkit-backdrop-filter:none!important;
+    }
+
+    body:not(.menu-open) .mobile-menu-backdrop{
+        display:none!important;
+        opacity:0!important;
+        pointer-events:none!important;
+    }
+
+    body.menu-open .mobile-menu-backdrop{
+        display:block!important;
+        opacity:1!important;
+        pointer-events:auto!important;
+    }
+
+    .main{
+        padding-top:78px!important;
+    }
+
+    .welcome,
+    .welcome h1{
+        padding-left:0!important;
+    }
+
+    .topbar{
+        margin-top:0!important;
+    }
+}
+
+@media(max-width:430px){
+    .mobile-menu-btn{
+        top:16px!important;
+        left:18px!important;
+    }
+
+    .main{
+        padding-top:78px!important;
+    }
+}
+</style>
+<style>
+/* ===== CLEAN PROFESSIONAL SETTINGS FINAL OVERRIDE ===== */
+.settings-page-clean{max-width:1180px;margin:0 auto}
+.settings-clean-hero{
+    display:flex;justify-content:space-between;align-items:center;gap:18px;
+    padding:20px;margin-bottom:18px;border-radius:24px;
+    background:linear-gradient(135deg,rgba(47,140,255,.20),rgba(139,92,246,.18));
+    border:1px solid rgba(125,170,255,.24);
+}
+.settings-clean-left{display:flex;align-items:center;gap:15px}
+.settings-clean-icon{
+    width:62px;height:62px;border-radius:20px;display:grid;place-items:center;
+    background:linear-gradient(135deg,#2f8cff,#8b5cf6);
+    box-shadow:0 0 28px rgba(139,92,246,.35)
+}
+.settings-clean-icon svg{width:34px;height:34px;fill:none;stroke:#fff;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.settings-clean-hero h2{font-size:26px;margin:0}
+.settings-clean-hero p{color:var(--muted);margin-top:5px}
+.clean-save-main,.clean-btn{
+    border:0;border-radius:13px;padding:12px 14px;font-weight:900;cursor:pointer;
+    color:#fff;background:linear-gradient(135deg,#2f8cff,#8b5cf6)
+}
+.clean-save-main{min-width:170px;color:#071733;background:linear-gradient(135deg,#00ff88,#00d9ff)}
+.clean-settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.clean-card{
+    background:linear-gradient(180deg,rgba(15,33,68,.80),rgba(8,22,49,.62))!important;
+    border:1px solid rgba(125,170,255,.22)!important;
+    border-radius:22px!important;padding:18px!important;
+    box-shadow:0 18px 45px rgba(0,0,0,.22)!important;
+}
+.clean-card h3{font-size:18px;margin-bottom:12px}
+.clean-row{
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)
+}
+.clean-row:last-child{border-bottom:0}
+.clean-row b{display:block;font-size:14px}
+.clean-row small,.clean-muted{display:block;color:var(--muted);font-size:12px;margin-top:4px;line-height:1.35}
+.clean-row .setting-input,.clean-row .setting-select{
+    width:190px!important;min-width:190px!important;
+    background:rgba(5,14,32,.86)!important;color:#fff!important;
+    border:1px solid rgba(125,170,255,.26)!important;border-radius:13px!important;
+    padding:10px 12px!important;font-weight:800!important
+}
+.clean-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.clean-actions.two{grid-template-columns:repeat(2,1fr)}
+.clean-btn.green{color:#071733;background:linear-gradient(135deg,#00ff88,#00d9ff)}
+.clean-btn.yellow{color:#111827;background:linear-gradient(135deg,#ffb800,#ffdf4d)}
+.clean-btn.blue{background:linear-gradient(135deg,#2f8cff,#2563eb)}
+.clean-btn.red{background:linear-gradient(135deg,#ff3366,#ff3b30)}
+.clean-btn.full{grid-column:1 / -1}
+.relay-list-clean{margin-top:12px}
+.last-email-box{color:var(--cyan)!important;word-break:break-word}
+.logout-nav-btn{color:#ff7777!important;text-decoration:none!important;border-top:1px solid rgba(255,255,255,.10)!important;margin-top:10px!important;padding-top:14px!important}
+@media(max-width:900px){
+    .settings-clean-hero{flex-direction:column;align-items:stretch}
+    .clean-settings-grid{grid-template-columns:1fr}
+    .clean-row{flex-direction:column;align-items:stretch}
+    .clean-row .setting-input,.clean-row .setting-select{width:100%!important;min-width:0!important}
+    .clean-actions,.clean-actions.two{grid-template-columns:1fr}
+}
+</style>
+<style>
+/* ===== LIGHT THEME FINAL ===== */
+body.light-theme{
+    --bg:#f4f7fb;--sidebar:#ffffff;--panel:#ffffff;--card:#ffffff;--card2:#eef3fb;
+    --line:rgba(30,64,175,.18);--text:#111827;--muted:#64748b;
+    background:linear-gradient(135deg,#f8fafc,#e2e8f0)!important;
+}
+body.light-theme .card,body.light-theme .clean-card,body.light-theme .settings-card,
+body.light-theme .stat,body.light-theme .pill,body.light-theme .footer{
+    background:#ffffff!important;color:#111827!important;
+}
+body.light-theme .sidebar{background:#ffffff!important;color:#111827!important}
+body.light-theme .nav-btn{color:#111827!important}
+body.light-theme .nav-btn.active{color:#fff!important}
+body.light-theme .setting-input,body.light-theme .setting-select{
+    background:#f8fafc!important;color:#111827!important;
+}
+</style>
+</head>
+
+<body>
+<div id="backend-banner" class="backend-banner">Backend Offline</div>
+<div class="app">
+
+<button id="mobile-menu-btn" class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open menu">
+    <svg viewBox="0 0 24 24">
+        <path d="M4 6h16"/>
+        <path d="M4 12h16"/>
+        <path d="M4 18h16"/>
+    </svg>
+</button>
+<div id="mobile-menu-backdrop" class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
+
+
+<aside class="sidebar">
+    <div class="brand">
+        <div class="logo pi-logo">
+            <svg viewBox="0 0 64 64">
+                <circle cx="24" cy="20" r="9" fill="#ff2d75"/>
+                <circle cx="40" cy="20" r="9" fill="#ff2d75"/>
+                <circle cx="17" cy="33" r="9" fill="#ff2d75"/>
+                <circle cx="32" cy="33" r="10" fill="#ff2d75"/>
+                <circle cx="47" cy="33" r="9" fill="#ff2d75"/>
+                <circle cx="25" cy="47" r="9" fill="#ff2d75"/>
+                <circle cx="39" cy="47" r="9" fill="#ff2d75"/>
+                <path d="M31 12C29 4 21 3 16 7c8 1 12 5 15 12" fill="#57d957"/>
+                <path d="M33 12C35 4 43 3 48 7c-8 1-12 5-15 12" fill="#57d957"/>
+            </svg>
+        </div>
+        <h2>Smart Energy<br>Saving System</h2>
+    </div>
+
+    <button class="nav-btn active" onclick="showSection('dashboard',this)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+    </button>
+
+    <button class="nav-btn" onclick="showSection('cameraSec',this)">
+        <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        Live Camera
+    </button>
+
+    <button class="nav-btn" onclick="showSection('systemSec',this)">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        System Status
+    </button>
+
+    <button class="nav-btn" onclick="showSection('energySec',this)">
+        <svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        Energy Monitor
+    </button>
+
+    <button class="nav-btn" onclick="showSection('gasSec',this)">
+        <svg viewBox="0 0 24 24"><path d="M8.5 14.5A4.5 4.5 0 0 0 13 19a4.5 4.5 0 0 0 4.5-4.5c0-4-4.5-5.5-4.5-11.5-2.5 2-5.5 5-5.5 11.5z"/></svg>
+        Gas Monitor
+    </button>
+
+    <button class="nav-btn" onclick="showSection('deviceSec',this)">
+        <svg viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>
+        Device Control
+    </button>
+
+    <button class="nav-btn" onclick="showSection('logsSec',this)">
+        <svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+        System Logs
+    </button>
+
+    <button class="nav-btn" onclick="showSection('healthSec',this)">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9-6-18-3 9H2"/></svg>
+        Pi Health
+    </button>
+    <button class="nav-btn" onclick="showSection('settingsSec',this)">
+        <svg viewBox="0 0 24 24">
+<path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z"/>
+<path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6V20a2 2 0 1 1-4 0v-.08a1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.88.34l-.05.05a2 2 0 1 1-2.83-2.83l.05-.05A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1H4a2 2 0 1 1 0-4h.08a1.7 1.7 0 0 0 .6-1 1.7 1.7 0 0 0-.34-1.88l-.05-.05a2 2 0 1 1 2.83-2.83l.05.05A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6V4a2 2 0 1 1 4 0v.08a1.7 1.7 0 0 0 1 .6 1.7 1.7 0 0 0 1.88-.34l.05-.05a2 2 0 1 1 2.83 2.83l-.05.05A1.7 1.7 0 0 0 19.4 9c.08.35.29.69.6 1H20a2 2 0 1 1 0 4h-.08c-.31.31-.52.65-.6 1z"/>
+</svg>
+        Settings
+    </button>
+
+
+    
+<a href="/logout" class="nav-btn logout-nav-btn">
+    <svg viewBox="0 0 24 24">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+    Logout
+</a>
+
+<div class="side-health">
+        <h3>System Health</h3>
+        <div class="health-ring"><div class="health-inner">95%</div></div>
+        <p class="success">Excellent</p>
+        <p style="margin-top:10px;color:#dce8ff;font-size:13px">All Systems Operational</p>
+    </div>
+</aside>
+
+<main class="main">
+    <div class="topbar">
+        <div class="welcome">
+            <h1>Welcome back, <span>Admin</span> 👋</h1>
+            <p>Real-time AI Monitoring & Energy Management Dashboard</p>
+        </div>
+        <div class="top-actions">
+            <div class="pill"><span class="dot"></span> System Online</div>
+            <div class="pill">All Systems Safe</div>
+            <div class="pill time-pill">
+                <div style="font-size:11px;color:var(--muted)">Current Time</div>
+                <div id="current-time">--:--:--</div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="emergency-alert" id="emergency-alert">
+        <h2>🚨 GAS DETECTED!</h2>
+        <p>Emergency shutdown activated. Device turned OFF automatically.</p>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section active">
+        <div class="status-grid">
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2"/><path d="M17 11h4"/><path d="M19 9v4"/></svg></div>
+                    <div><div class="stat-title">Humans Detected</div><div class="stat-sub">Current</div></div>
+                </div>
+                <div class="stat-value" id="summary-human">0</div>
+                <div class="mini-line"><svg viewBox="0 0 160 25"><path d="M0 19 L20 14 L40 17 L60 8 L80 16 L105 11 L130 18 L160 12" stroke="#2f8cff" fill="none" stroke-width="3"/></svg></div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+                    <div><div class="stat-title">Energy Saved</div><div class="stat-sub">Estimated</div></div>
+                </div>
+                <div class="stat-value" id="summary-kwh">0 kWh</div>
+                <div class="mini-line"><svg viewBox="0 0 160 25"><path d="M0 18 L18 17 L40 10 L60 19 L82 14 L102 16 L125 9 L160 15" stroke="#00ff88" fill="none" stroke-width="3"/></svg></div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg></div>
+                    <div><div class="stat-title">Device Status</div><div class="stat-sub">Relay</div></div>
+                </div>
+                <div class="stat-value" id="summary-device">OFF</div>
+                <div class="mini-line"><svg viewBox="0 0 160 25"><path d="M0 18 L25 18 L50 10 L75 16 L100 13 L130 16 L160 12" stroke="#ffb800" fill="none" stroke-width="3"/></svg></div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A4.5 4.5 0 0 0 13 19a4.5 4.5 0 0 0 4.5-4.5c0-4-4.5-5.5-4.5-11.5-2.5 2-5.5 5-5.5 11.5z"/></svg></div>
+                    <div><div class="stat-title">Gas Status</div><div class="stat-sub">MQ2 Sensor</div></div>
+                </div>
+                <div class="stat-value" id="summary-gas">Safe</div>
+                <div class="mini-line"><svg viewBox="0 0 160 25"><path d="M0 18 L20 15 L40 21 L60 10 L80 16 L102 12 L130 18 L160 11" stroke="#ff3366" fill="none" stroke-width="3"/></svg></div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2><span class="heading-icon purple"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>Live AI Camera Feed</h2>
+                <div class="video-wrap">
+                    <img src="http://ruf.local:5000/video_feed"
+                         class="camera-stream"
+                         id="camera-stream">
+                    <div id="camera-offline" class="camera-offline">
+                        📷 Camera Offline / Backend Disconnected
+                    </div>
+                    <span class="fps">FPS: Live</span>
+                    <span class="live-badge" id="camera-status">Checking...</span>
+                    <div class="overlay">
+                        <div><small>Humans Detected</small><div class="value primary" id="human-count">0</div></div>
+                        <div><small>Human Status</small><div class="value" id="human-status">Loading</div></div>
+                        <div><small>Device</small><div class="value" id="device-overlay">Loading</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card" style="margin-bottom:18px">
+                    <h2><span class="heading-icon cyan"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>System Status</h2>
+                    <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>Camera Status</div><span id="camera-status-text" class="success">Online</span></div>
+                    <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Monitoring</div><span id="monitoring-status">--</span></div>
+                    <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>Last Email</div><span id="last-email">Never</span></div>
+                    <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>Energy Status</div><span id="energy-status" class="primary">Loading...</span></div>
+                    <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/><path d="M8 7h8"/></svg></span>Worker Activity</div><span id="worker-activity" class="danger">Loading...</span></div>
+                </div>
+
+                <div class="card energy-card">
+                    <h2><span class="heading-icon green"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>Energy Saving</h2>
+                    <div class="gauge"></div>
+                    <div class="big-kwh" id="big-energy-kwh">0 kWh</div>
+                    <p style="color:var(--muted)">Estimated AI Saving</p>
+                    <div class="progress"><span></span></div>
+                    <div class="sensor-item"><span>Energy Saved</span><span id="energy-saved">0 min</span></div>
+                    <div class="sensor-item"><span>Power Saved</span><span id="energy-kwh">0 kWh</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAMERA SECTION -->
+    <section id="cameraSec" class="section">
+        <div class="card">
+            <h2><span class="heading-icon purple"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>Live AI Camera Feed</h2>
+            <div class="video-wrap" style="height:620px">
+                <img src="http://ruf.local:5000/video_feed" class="camera-stream">
+                <span class="fps">FPS: Live</span>
+                <span class="live-badge">● LIVE</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SYSTEM SECTION -->
+    <section id="systemSec" class="section">
+        <div class="grid">
+            <div class="card">
+                <h2><span class="heading-icon cyan"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>System Status</h2>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon success-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Monitoring</div><span id="monitoring-status-2">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2"/><path d="M17 11h4"/><path d="M19 9v4"/></svg></span>Human Status</div><span id="human-status-2">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/><path d="M8 7h8"/></svg></span>Worker Activity</div><span id="worker-activity-2">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon warning-icon"><svg viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg></span>Device Status</div><span id="device-status-2">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>Last Email</div><span id="last-email-2">Never</span></div>
+            </div>
+            <div class="card">
+                <h2><span class="heading-icon purple"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2"/><path d="M17 11h4"/><path d="M19 9v4"/></svg></span>AI Activity Chart</h2>
+                <div class="chart-box">
+                    <svg viewBox="0 0 320 190" preserveAspectRatio="none">
+                        <defs><linearGradient id="grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".55"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs>
+                        <line class="gridline" x1="25" y1="40" x2="300" y2="40"/><line class="gridline" x1="25" y1="90" x2="300" y2="90"/><line class="gridline" x1="25" y1="140" x2="300" y2="140"/>
+                        <path id="activity-area" class="area" d="M25 150 L300 150 L300 180 L25 180 Z"/>
+                        <path id="activity-line" class="line-path" d="M25 150 L300 150"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENERGY -->
+    <section id="energySec" class="section">
+        <div class="grid">
+            <div class="card energy-card">
+                <h2><span class="heading-icon green"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>Energy Saving Overview</h2>
+                <div class="gauge"></div>
+                <div class="big-kwh" id="big-energy-kwh-2">0 kWh</div>
+                <p style="color:var(--muted)">Estimated saving based on 100W device</p>
+                <div class="progress"><span></span></div>
+                <div class="sensor-item"><span>Energy Saved Time</span><span id="energy-saved-2">0 min</span></div>
+                <div class="sensor-item"><span>Power Saved</span><span id="energy-kwh-2">0 kWh</span></div>
+            </div>
+            <div class="card">
+                <h2><span class="heading-icon green"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>Weekly Energy Graph</h2>
+                <div class="chart-box">
+                    <svg viewBox="0 0 320 190" preserveAspectRatio="none">
+                        <defs><linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00d9ff"/><stop offset="1" stop-color="#1e40af"/></linearGradient></defs>
+                        <line class="gridline" x1="25" y1="40" x2="300" y2="40"/><line class="gridline" x1="25" y1="90" x2="300" y2="90"/><line class="gridline" x1="25" y1="140" x2="300" y2="140"/>
+                        <rect id="bar-mon" class="bar" x="38" y="170" width="24" height="0"/>
+                        <rect id="bar-tue" class="bar" x="80" y="170" width="24" height="0"/>
+                        <rect id="bar-wed" class="bar" x="122" y="170" width="24" height="0"/>
+                        <rect id="bar-thu" class="bar" x="164" y="170" width="24" height="0"/>
+                        <rect id="bar-fri" class="bar" x="206" y="170" width="24" height="0"/>
+                        <rect id="bar-sat" class="bar" x="248" y="170" width="24" height="0"/>
+                        <rect id="bar-sun" class="bar" x="290" y="170" width="24" height="0"/>
+                        <text x="50" y="184" text-anchor="middle" fill="#95a5c9" font-size="10">Mon</text>
+                        <text x="92" y="184" text-anchor="middle" fill="#95a5c9" font-size="10">Tue</text>
+                        <text x="134" y="184" text-anchor="middle" fill="#95a5c9" font-size="10">Wed</text>
+                        <text x="176" y="184" text-anchor="middle" fill="#95a5c9" font-size="10">Thu</text>
+                        <text x="218" y="184" text-anchor="middle" fill="#95a5c9" font-size="10">Fri</text>
+                        <text x="260" y="184" text-anchor="middle" fill="#95a5c9" font-size="10">Sat</text>
+                        <text x="302" y="184" text-anchor="middle" fill="#95a5c9" font-size="10">Sun</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAS -->
+    <section id="gasSec" class="section">
+        <div class="card">
+            <h2><span class="heading-icon red"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Gas Monitor</h2>
+
+            <div class="sensor-item">
+                <div class="sensor-left"><span class="sensor-icon danger-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8.5 14.5A4.5 4.5 0 0 0 13 19a4.5 4.5 0 0 0 4.5-4.5c0-4-4.5-5.5-4.5-11.5-2.5 2-5.5 5-5.5 11.5z"/></svg></span>MQ2 Sensor</div>
+                <span id="gas-status" class="sensor-value success">Safe</span>
+            </div>
+
+            <div class="sensor-item">
+                <div class="sensor-left"><span class="sensor-icon success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 2h4"/><path d="M11 2v5l-3 4v9a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-9l-3-4V2"/></svg></span>LPG Gas</div>
+                <span class="sensor-value success">Safe</span>
+            </div>
+
+            <div class="sensor-item">
+                <div class="sensor-left"><span class="sensor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 15h10a4 4 0 1 0-4-4"/><path d="M3 19h14a3 3 0 1 0-3-3"/></svg></span>Smoke</div>
+                <span class="sensor-value success">Safe</span>
+            </div>
+
+            <div class="sensor-item">
+                <div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 8h12a3 3 0 1 0-3-3"/><path d="M3 12h18"/><path d="M3 16h12a3 3 0 1 1-3 3"/></svg></span>Air Quality</div>
+                <span class="sensor-value primary">Good</span>
+            </div>
+
+            <div class="sensor-item">
+                <div class="sensor-left"><span class="sensor-icon success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13c4-8 10-10 14-10-1 8-5 14-14 16 2-2 3-4 4-6z"/></svg></span>Environment</div>
+                <span class="sensor-value success">Normal</span>
+            </div>
+
+            <div class="sensor-item">
+                <div class="sensor-left"><span class="sensor-icon success-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Relay Safety</div>
+                <span id="relay-safety" class="sensor-value success">Normal</span>
+            </div>
+
+            <div class="sensor-item">
+                <div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>Last Check</div>
+                <span id="last-check">--</span>
+            </div>
+
+            <button class="btn yellow" onclick="resetGasAlert()">Reset Gas Alert</button>
+        </div>
+    </section>
+
+    <!-- DEVICE -->
+    <section id="deviceSec" class="section">
+        <div class="card">
+            <h2><span class="heading-icon orange"><svg viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg></span>Electric Device Control</h2>
+            <div class="device-item">
+                <div class="sensor-left"><span class="sensor-icon warning-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12c1 1 1 2 1 4h6c0-2 0-3 1-4a7 7 0 0 0-4-12z"/></svg></span><div><h4>Bulb</h4><p style="color:var(--muted)">Available Relay</p></div></div>
+                <div class="toggle-switch" id="main-relay-toggle" onclick="toggleMainRelay()"></div>
+            </div>
+            <div class="device-item">
+                <div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17v2M12 17v3M17 17v2"/><path d="M7 9h.01M11 9h6"/></svg></span><div><h4>AC Unit</h4><p style="color:var(--muted)">Relay not added yet</p></div></div>
+                <div class="toggle-switch disabled" onclick="deviceNotAvailable()"></div>
+            </div>
+            <div class="device-item">
+                <div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><div><h4>Computer</h4><p style="color:var(--muted)">Relay not added yet</p></div></div>
+                <div class="toggle-switch disabled" onclick="deviceNotAvailable()"></div>
+            </div>
+            <div class="device-item">
+                <div class="sensor-left"><span class="sensor-icon success-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/></svg></span><div><h4>Machine</h4><p style="color:var(--muted)">Relay not added yet</p></div></div>
+                <div class="toggle-switch disabled" onclick="deviceNotAvailable()"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOGS -->
+    <section id="logsSec" class="section">
+        <div class="card">
+            <h2><span class="heading-icon cyan"><svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span>System Logs</h2>
+            <div class="logs-container professional-logs" id="logs-container">
+                <div class="log-entry">
+                    <span class="log-time">--:--:--</span>
+                    <span class="log-badge info">INFO</span>
+                    <span>Dashboard loaded. Waiting for Raspberry Pi data...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEALTH -->
+    <section id="healthSec" class="section">
+        <div class="card pi-health-panel">
+            <h2><span class="heading-icon green"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9-6-18-3 9H2"/></svg></span>Pi Health</h2>
+            <div class="pi-health-top">
+                <div class="mini-health-ring"><div><strong>95%</strong><span>Excellent</span></div></div>
+                <div class="health-summary">
+                    <h3>Raspberry Pi Status</h3>
+                    <p class="success">All Systems Operational</p>
+                    <p style="color:var(--muted);margin-top:6px;">Live CPU, RAM, storage and uptime monitoring.</p>
+                </div>
+            </div>
+            <div class="health-grid">
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon danger-icon"><svg viewBox="0 0 24 24"><path d="M14 14.76V5a4 4 0 0 0-8 0v9.76a6 6 0 1 0 8 0z"/></svg></span>CPU Temp</div><span id="cpu-temp">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon warning-icon"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg></span>CPU Usage</div><span id="cpu-usage">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="10" rx="2"/><path d="M7 7V4M12 7V4M17 7V4M7 20v-3M12 20v-3M17 20v-3"/></svg></span>RAM Usage</div><span id="ram-usage">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon success-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 4v5h8V4"/><circle cx="12" cy="15" r="2"/></svg></span>Storage</div><span id="disk-usage">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon primary"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>Uptime</div><span id="uptime">--</span></div>
+                <div class="sensor-item"><div class="sensor-left"><span class="sensor-icon success-icon"><svg viewBox="0 0 24 24"><path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M12 20h.01"/></svg></span>Internet</div><span id="internet-status">Checking...</span></div>
+            </div>
+            
+        </div>
+    </section>
+
+    
+    <!-- SETTINGS -->
+    <section id="settingsSec" class="section">
+        <div class="settings-page-clean">
+            <div class="settings-clean-hero">
+                <div class="settings-clean-left">
+                    <div class="settings-clean-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z"/>
+                            <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6V20a2 2 0 1 1-4 0v-.08a1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.88.34l-.05.05a2 2 0 1 1-2.83-2.83l.05-.05A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1H4a2 2 0 1 1 0-4h.08a1.7 1.7 0 0 0 .6-1 1.7 1.7 0 0 0-.34-1.88l-.05-.05a2 2 0 1 1 2.83-2.83l.05.05A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6V4a2 2 0 1 1 4 0v.08a1.7 1.7 0 0 0 1 .6 1.7 1.7 0 0 0 1.88-.34l.05-.05a2 2 0 1 1 2.83 2.83l-.05.05A1.7 1.7 0 0 0 19.4 9c.08.35.29.69.6 1H20a2 2 0 1 1 0 4h-.08c-.31.31-.52.65-.6 1z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Settings</h2>
+                        <p>Configure monitoring, safety, device management, reports and Pi controls.</p>
+                    </div>
+                </div>
+                <button class="clean-save-main" onclick="saveProfessionalSettings()">Save All Settings</button>
+            </div>
+
+            <div class="clean-settings-grid">
+                <div class="clean-card">
+                    <h3>System Configuration</h3>
+                    <div class="clean-row"><span><b>System Mode</b><small>Home, Office or Factory profile</small></span><select id="set-system-mode" class="setting-select"><option>Home</option><option selected>Office</option><option>Factory</option><option>Custom</option></select></div>
+                    <div class="clean-row"><span><b>Auto OFF Delay</b><small>Device turns OFF after no human</small></span><input id="set-auto-off" class="setting-input" type="number" value="20"></div>
+                    <div class="clean-row"><span><b>Dashboard Refresh</b><small>Live data update interval</small></span><input id="set-refresh" class="setting-input" type="number" value="2"></div>
+                    <div class="clean-row"><span><b>Auto Logout</b><small>Session timeout in minutes</small></span><input id="set-auto-logout" class="setting-input" type="number" value="15"></div>
+                    <div class="clean-row"><span><b>Theme</b><small>Dashboard appearance</small></span><select id="set-theme" class="setting-select"><option selected>Dark</option><option>Light</option></select></div>
+                </div>
+
+                <div class="clean-card">
+                    <h3>AI & Camera</h3>
+                    <div class="clean-row"><span><b>Human Detection</b><small>AI person detection</small></span><div id="set-human" class="toggle-switch active"></div></div>
+                    <div class="clean-row"><span><b>Worker Detection</b><small>Worker activity analysis</small></span><div id="set-worker" class="toggle-switch active"></div></div>
+                    <div class="clean-row"><span><b>AI Sensitivity</b><small>Detection sensitivity level</small></span><select id="set-ai-sensitivity" class="setting-select"><option>Low</option><option selected>Medium</option><option>High</option></select></div>
+                    <div class="clean-row"><span><b>Camera</b><small>Enable or disable live camera</small></span><div id="set-camera" class="toggle-switch active"></div></div>
+                    <div class="clean-row"><span><b>Resolution</b><small>Camera stream quality</small></span><select id="set-camera-resolution" class="setting-select"><option>480p</option><option selected>720p</option><option>1080p</option></select></div>
+                    <div class="clean-row"><span><b>Refresh Rate</b><small>Camera FPS target</small></span><input id="set-camera-refresh" class="setting-input" type="number" value="15"></div>
+                </div>
+
+                <div class="clean-card">
+                    <h3>Safety & Alerts</h3>
+                    <div class="clean-row"><span><b>Gas Detection</b><small>MQ2 gas/smoke monitoring</small></span><div id="set-gas" class="toggle-switch active"></div></div>
+                    <div class="clean-row"><span><b>Buzzer</b><small>Local alarm for emergency</small></span><div id="set-buzzer" class="toggle-switch active"></div></div>
+                    <div class="clean-row"><span><b>Email Alerts</b><small>Send emergency emails</small></span><div id="set-email" class="toggle-switch active"></div></div>
+                    <div class="clean-row"><span><b>Emergency Shutdown</b><small>Relay OFF when gas detected</small></span><div id="set-emergency" class="toggle-switch active"></div></div>
+                    <div class="clean-row"><span><b>Alert Recipient Email</b><small>Change receiver email anytime</small></span><input id="set-alert-email" class="setting-input" type="email" required pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" value="umergujjarg391@gmail.com"></div>
+                    <div class="clean-row"><span><b>Last Email Sent</b><small>Last successful alert timestamp</small></span><strong id="last-email-setting" class="last-email-box">No Alerts Sent</strong></div>
+                    <button class="clean-btn green" onclick="testEmail()">Test Email</button>
+                </div>
+
+                <div class="clean-card">
+                    <h3>Relay Device Manager</h3>
+                    <div class="clean-row"><span><b>Relay Number</b><small>Select relay channel</small></span><select id="relay-number" class="setting-select"><option value="1">Relay 1</option><option value="2">Relay 2</option><option value="3">Relay 3</option><option value="4">Relay 4</option></select></div>
+                    <div class="clean-row"><span><b>Device Name</b><small>Bulb, Fan, AC etc.</small></span><input id="relay-device-name" class="setting-input" value="Fan"></div>
+                    <div class="clean-row"><span><b>Power Watts</b><small>Used for energy calculation</small></span><input id="relay-device-power" class="setting-input" type="number" value="75"></div>
+                    <div class="clean-actions">
+                        <button class="clean-btn blue" onclick="addRelayDevice()">Save Device</button>
+                        <button class="clean-btn yellow" onclick="testSelectedRelay()">Test Relay</button>
+                        <button class="clean-btn red" onclick="removeRelayDevice()">Remove</button>
+                    </div>
+                    <div id="relay-device-list" class="relay-list-clean"></div>
+                </div>
+
+                <div class="clean-card">
+                    <h3>Reports & Event Logs</h3>
+                    <p class="clean-muted">PDF reports are clean. CSV stores only event changes, not every second.</p>
+                    <div class="clean-actions two">
+                        <button class="clean-btn yellow" onclick="exportPDF()">Full PDF Report</button>
+                        <button class="clean-btn yellow" onclick="weeklyPDF()">Weekly PDF</button>
+                        <button class="clean-btn yellow" onclick="monthlyPDF()">Monthly PDF</button>
+                        <button class="clean-btn blue" onclick="exportCSV()">CSV Event Logs</button>
+                        <button class="clean-btn red" onclick="resetEnergy()">Reset Energy</button>
+                        <button class="clean-btn red" onclick="clearActivityLogs()">Clear Logs</button>
+                    </div>
+                </div>
+
+                <div class="clean-card">
+                    <h3>Hardware Testing & Pi Control</h3>
+                    <p class="clean-muted">Test connected modules and control Raspberry Pi safely.</p>
+                    <div class="clean-actions two">
+                        <button class="clean-btn blue" onclick="testCamera()">Camera</button>
+                        <button class="clean-btn blue" onclick="testRelay()">Relay</button>
+                        <button class="clean-btn blue" onclick="testGas()">Gas</button>
+                        <button class="clean-btn yellow" onclick="testBuzzer()">Buzzer</button>
+                        <button class="clean-btn yellow" onclick="restartService()">Restart Service</button>
+                        <button class="clean-btn yellow" onclick="restartPi()">Restart Pi</button>
+                        <button class="clean-btn red full" onclick="shutdownPi()">Shutdown Pi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="footer">
+        <span>© 2026 Smart Energy Saving System</span>
+        <span>
+        <svg style="width:20px;height:20px;vertical-align:middle;margin-right:6px" viewBox="0 0 64 64">
+            <circle cx="24" cy="20" r="9" fill="#ff2d75"/>
+            <circle cx="40" cy="20" r="9" fill="#ff2d75"/>
+            <circle cx="17" cy="33" r="9" fill="#ff2d75"/>
+            <circle cx="32" cy="33" r="10" fill="#ff2d75"/>
+            <circle cx="47" cy="33" r="9" fill="#ff2d75"/>
+            <circle cx="25" cy="47" r="9" fill="#ff2d75"/>
+            <circle cx="39" cy="47" r="9" fill="#ff2d75"/>
+            <path d="M31 12C29 4 21 3 16 7c8 1 12 5 15 12" fill="#57d957"/>
+            <path d="M33 12C35 4 43 3 48 7c-8 1-12 5-15 12" fill="#57d957"/>
+        </svg>
+        Powered by Raspberry Pi
+    </span>
+        <span>Real-time AI + IoT Monitoring</span>
+    </div>
+</main>
+</div>
+
+<div class="toast" id="toast">Device not available yet</div>
+
+<script>
+const API_BASE = window.location.origin;
+function getBackendURL(path){
+    if(typeof API_BASE !== "undefined" && API_BASE){
+        return API_BASE + path;
+    }
+    return path;
+}
+
+function showSection(id,btn){
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+}
+
+function updateTime(){
+    document.getElementById("current-time").innerText=new Date().toLocaleTimeString();
+}
+setInterval(updateTime,1000); updateTime();
+
+function safeSet(id,val){
+    const el=document.getElementById(id);
+    if(el) el.innerText=val;
+}
+function safeClass(id,cls){
+    const el=document.getElementById(id);
+    if(el) el.className=cls;
+}
+
+function addLog(type,message){
+    const time=new Date().toLocaleTimeString();
+    const log=document.createElement("div");
+    log.className="log-entry";
+    log.innerHTML=`<span class="log-time">${time}</span><span class="log-badge ${type}">${type.toUpperCase()}</span><span>${message}</span>`;
+    const box=document.getElementById("logs-container");
+    if(!box) return;
+    box.insertBefore(log,box.firstChild);
+    while(box.children.length>10){box.removeChild(box.lastChild)}
+}
+
+function showToast(message){
+    const toast=document.getElementById("toast");
+    toast.innerText=message;
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"),2200);
+}
+function deviceNotAvailable(){
+    showToast("Device not available yet");
+    addLog("warning","Device not available yet - relay not installed");
+}
+function toggleMainRelay(){
+    const toggle=document.getElementById("main-relay-toggle");
+    const isOn=toggle.classList.contains("active");
+    const route = isOn ? API_BASE + "/manual_off" : API_BASE + "/manual_on";
+    fetch(route).then(res=>res.text()).then(result=>{
+        if(result.includes("ON")){
+            toggle.classList.add("active");
+            addLog("success","Bulb turned ON manually");
+        }else{
+            toggle.classList.remove("active");
+            addLog("primary","Bulb turned OFF manually");
+        }
+        updateSystem();
+    }).catch(()=>{
+        showToast("Backend connection error");
+        addLog("danger","Backend connection error");
+    });
+}
+
+let previousGas="",previousHuman="",previousDevice="",previousWorker="";
+
+function updateSystem(){
+    fetch(API_BASE + "/system_status").then(res=>res.json()).then(data=>{
+        const gas=data.gas||"Unknown";
+        const human=data.human||"Unknown";
+        const energy=data.energy||"Unknown";
+        const device=data.device||"OFF";
+        const worker=data.worker_activity||"Unknown";
+        const monitoring=data.monitoring||"Disabled";
+        const lastEmail=data.last_email||"Never";
+        const energySaved=data.energy_saved||0;
+        const energyKwh=data.energy_saved_kwh||0;
+
+        const humanCount=human==="Human Detected"?"1":"0";
+        safeSet("human-count",humanCount);
+        safeSet("summary-human",humanCount);
+        safeSet("summary-kwh",energyKwh+" kWh");
+        safeSet("summary-device",device);
+        safeSet("summary-gas",gas);
+
+        safeSet("human-status",human);
+        safeSet("human-status-2",human);
+        safeSet("device-overlay",device);
+        safeSet("device-status-2",device);
+        safeSet("monitoring-status",monitoring);
+        safeSet("monitoring-status-2",monitoring);
+        safeSet("last-email",lastEmail);
+        safeSet("last-email-2",lastEmail);
+        safeSet("energy-status",energy);
+        safeSet("worker-activity",worker);
+        safeSet("worker-activity-2",worker);
+        safeSet("energy-saved",energySaved+" min");
+        safeSet("energy-saved-2",energySaved+" min");
+        safeSet("energy-kwh",energyKwh+" kWh");
+        safeSet("energy-kwh-2",energyKwh+" kWh");
+        safeSet("big-energy-kwh",energyKwh+" kWh");
+        safeSet("big-energy-kwh-2",energyKwh+" kWh");
+        safeSet("last-check",new Date().toLocaleTimeString());
+
+        safeClass("monitoring-status",monitoring==="Active"?"sensor-value success":"sensor-value danger");
+        safeClass("monitoring-status-2",monitoring==="Active"?"sensor-value success":"sensor-value danger");
+        safeClass("human-status",human==="Human Detected"?"value success":"value danger");
+        safeClass("human-status-2",human==="Human Detected"?"sensor-value success":"sensor-value danger");
+        safeClass("device-overlay",device.includes("ON")?"value success":"value danger");
+        safeClass("device-status-2",device.includes("ON")?"sensor-value success":"sensor-value danger");
+        safeClass("energy-status",energy==="Emergency"?"sensor-value danger":energy.includes("Waiting")?"sensor-value warning":"sensor-value primary");
+        safeClass("worker-activity",worker==="Worker Working"?"sensor-value success":worker==="Worker Idle"?"sensor-value warning":"sensor-value danger");
+        safeClass("worker-activity-2",worker==="Worker Working"?"sensor-value success":worker==="Worker Idle"?"sensor-value warning":"sensor-value danger");
+
+        const gasEl=document.getElementById("gas-status");
+        if(gasEl){
+            gasEl.innerText=gas;
+            gasEl.className=gas==="Gas Detected"?"sensor-value danger":"sensor-value success";
+        }
+
+        const relaySafety=document.getElementById("relay-safety");
+        const toggle=document.getElementById("main-relay-toggle");
+
+        if(gas==="Gas Detected"){
+            document.getElementById("emergency-alert").classList.add("active");
+            if(relaySafety){relaySafety.innerText="Emergency OFF";relaySafety.className="sensor-value danger"}
+            if(toggle) toggle.classList.remove("active");
+        }else{
+            document.getElementById("emergency-alert").classList.remove("active");
+            if(relaySafety){relaySafety.innerText="Normal";relaySafety.className="sensor-value success"}
+        }
+
+        if(toggle){
+            if(device.includes("ON")) toggle.classList.add("active");
+            else toggle.classList.remove("active");
+        }
+
+        if(previousGas && previousGas!==gas) addLog(gas==="Gas Detected"?"danger":"success","Gas status changed: "+gas);
+        if(previousHuman && previousHuman!==human) addLog(human==="Human Detected"?"success":"warning","Human status changed: "+human);
+        if(previousDevice && previousDevice!==device) addLog(device.includes("ON")?"success":"primary","Device status changed: "+device);
+        if(previousWorker && previousWorker!==worker) addLog(worker==="Worker Working"?"success":worker==="Worker Idle"?"warning":"danger","Worker activity changed: "+worker);
+
+        previousGas=gas;previousHuman=human;previousDevice=device;previousWorker=worker;
+    }).catch(()=>{
+        addLog("danger","Backend Disconnected");
+
+        safeSet("monitoring-status","Disconnected");
+        safeSet("monitoring-status-2","Disconnected");
+        safeSet("human-status","No Data");
+        safeSet("human-status-2","No Data");
+        safeSet("worker-activity","No Data");
+        safeSet("worker-activity-2","No Data");
+        safeSet("energy-status","Waiting...");
+        safeSet("device-overlay","Offline");
+        safeSet("device-status-2","Offline");
+        safeSet("summary-device","Offline");
+        safeSet("summary-gas","No Data");
+
+        safeClass("monitoring-status","sensor-value danger");
+        safeClass("monitoring-status-2","sensor-value danger");
+        safeClass("human-status","value warning");
+        safeClass("human-status-2","sensor-value warning");
+        safeClass("worker-activity","sensor-value warning");
+        safeClass("worker-activity-2","sensor-value warning");
+        safeClass("energy-status","sensor-value warning");
+        safeClass("device-overlay","value danger");
+
+        const cameraStatus = document.getElementById("camera-status");
+        if(cameraStatus){
+            cameraStatus.innerHTML = "● OFFLINE";
+            cameraStatus.className = "live-badge danger";
+        }
+    });
+}
+
+function updateCameraStatus(){
+    fetch(API_BASE + "/camera_status").then(res=>res.json()).then(data=>{
+        const badge = document.getElementById("camera-status");
+        const text = document.getElementById("camera-status-text");
+
+        if(data.status === "Online"){
+            if(badge){
+                badge.innerHTML = "● LIVE";
+                badge.className = "live-badge";
+            }
+            if(text){
+                text.innerHTML = "Online";
+                text.className = "success";
+            }
+        }else{
+            if(badge){
+                badge.innerHTML = "● OFFLINE";
+                badge.className = "live-badge danger";
+            }
+            if(text){
+                text.innerHTML = "Offline";
+                text.className = "danger";
+            }
+        }
+    }).catch(()=>{
+        const badge = document.getElementById("camera-status");
+        const text = document.getElementById("camera-status-text");
+
+        if(badge){
+            badge.innerHTML = "● OFFLINE";
+            badge.className = "live-badge danger";
+        }
+        if(text){
+            text.innerHTML = "Offline";
+            text.className = "danger";
+        }
+    });
+}
+function updatePiHealth(){
+    fetch(API_BASE + "/pi_health").then(res=>res.json()).then(data=>{
+        safeSet("cpu-temp",data.temp+" °C");
+        safeSet("cpu-usage",data.cpu+" %");
+        safeSet("ram-usage",data.ram+" %");
+        safeSet("disk-usage",data.disk+" %");
+        safeSet("uptime",data.uptime);
+        const internet=document.getElementById("internet-status");
+        if(internet) internet.innerHTML=navigator.onLine?"<span class='success'>Connected</span>":"<span class='danger'>Offline</span>";
+    }).catch(()=>{
+        safeSet("cpu-temp","--");
+        safeSet("cpu-usage","--");
+        safeSet("ram-usage","--");
+        safeSet("disk-usage","--");
+        safeSet("uptime","Offline");
+        const internet=document.getElementById("internet-status");
+        if(internet) internet.innerHTML="<span class='danger'>Offline</span>";
+    });
+}
+function shutdownPi(){
+    if(confirm("Shutdown Raspberry Pi?")){
+        fetch(API_BASE + "/shutdown_pi").then(res=>res.text()).then(data=>alert(data));
+    }
+}
+function resetGasAlert(){
+    fetch(API_BASE + "/reset_gas").then(res=>res.text()).then(data=>{
+        alert(data);
+        document.getElementById("emergency-alert").classList.remove("active");
+    });
+}
+
+
+function updateActivityChart(){
+    fetch(API_BASE + "/activity_chart")
+    .then(res=>res.json())
+    .then(data=>{
+        const line=document.getElementById("activity-line");
+        const area=document.getElementById("activity-area");
+        if(!line || !area || !Array.isArray(data) || data.length===0) return;
+
+        const startX=25;
+        const endX=300;
+        const bottomY=180;
+        const idleY=150;
+        const workerY=90;
+        const humanY=40;
+        const step=(endX-startX)/Math.max(data.length-1,1);
+
+        let linePath="";
+        let areaPath="";
+
+        data.forEach((point,index)=>{
+            const x=startX+(index*step);
+            let y=idleY;
+
+            if(Number(point.human)===1) y=humanY;
+            else if(Number(point.worker)===1) y=workerY;
+
+            if(index===0){
+                linePath=`M${x} ${y}`;
+                areaPath=`M${x} ${y}`;
+            }else{
+                linePath+=` L${x} ${y}`;
+                areaPath+=` L${x} ${y}`;
+            }
+        });
+
+        areaPath+=` L${endX} ${bottomY} L${startX} ${bottomY} Z`;
+        line.setAttribute("d",linePath);
+        area.setAttribute("d",areaPath);
+    })
+    .catch(()=>{
+        addLog("warning","AI Activity Chart waiting for backend data");
+    });
+}
+
+
+function updateWeeklyEnergyChart(){
+    fetch(API_BASE + "/weekly_energy")
+    .then(res=>res.json())
+    .then(data=>{
+        if(!Array.isArray(data) || data.length===0) return;
+
+        const maxKwh=Math.max(...data.map(d=>Number(d.kwh)||0),0.001);
+        const maxHeight=130;
+        const baseY=170;
+
+        data.forEach(item=>{
+            const day=String(item.day||"").toLowerCase();
+            const bar=document.getElementById("bar-"+day);
+            if(!bar) return;
+
+            const value=Number(item.kwh)||0;
+            const h=value>0 ? Math.max((value/maxKwh)*maxHeight,3) : 0;
+            const y=baseY-h;
+
+            bar.setAttribute("height",h);
+            bar.setAttribute("y",y);
+        });
+    })
+    .catch(()=>{
+        console.warn("Weekly Energy Chart waiting for backend data");
+    });
+}
+
+setInterval(updateSystem,2000);
+setInterval(updateActivityChart,2000);
+setInterval(updateWeeklyEnergyChart,5000);
+setInterval(updateCameraStatus,5000);
+setInterval(updatePiHealth,5000);
+updateSystem(); updateActivityChart(); updateWeeklyEnergyChart(); updateCameraStatus(); updatePiHealth();
+
+setTimeout(()=>{
+    const img=document.getElementById("camera-stream");
+    if(img) img.src=API_BASE + "/video_feed?t=" + new Date().getTime();
+},5000);
+</script>
+
+<script>
+let backendWasOffline=false;
+function showBackendBanner(msg,isOnline){
+ const b=document.getElementById('backend-banner');
+ if(!b) return;
+ b.textContent=msg;
+ b.style.display='block';
+ if(isOnline){b.classList.add('online');}
+ else{b.classList.remove('online');}
+ if(isOnline){
+   setTimeout(()=>{b.style.display='none';},3000);
+ }
+}
+setInterval(async ()=>{
+ try{
+   await fetch(API_BASE + "/system_status");
+   if(backendWasOffline){
+      showBackendBanner("Backend Reconnected",true);
+      backendWasOffline=false;
+   }
+ }catch(e){
+   backendWasOffline=true;
+   showBackendBanner("Backend Offline",false);
+ }
+},2000);
+
+/* ===== RELAY DEVICE MANAGER JS ===== */
+function renderRelayDevices(devices){
+    const box=document.getElementById("relay-device-list");
+    if(!box) return;
+    box.innerHTML="";
+    devices.forEach(d=>{
+        const available = d.available || d.enabled;
+        const item=document.createElement("div");
+        item.className="relay-list-item";
+        item.innerHTML=`
+            <div>
+                <strong>Relay ${d.relay} → ${d.name}</strong>
+                <small>${d.power}W • ${d.status || "OFF"}</small>
+            </div>
+            <span class="relay-badge ${available ? "online":"pending"}">${available ? "Available":"Not Installed"}</span>
+        `;
+        box.appendChild(item);
+    });
+}
+function loadRelayDevices(){
+    fetch(API_BASE + "/devices")
+    .then(r=>r.json())
+    .then(renderRelayDevices)
+    .catch(()=>console.warn("Relay devices not loaded"));
+}
+function addRelayDevice(){
+    const relayNo=parseInt(document.getElementById("relay-number").value);
+    const name=document.getElementById("relay-device-name").value || "Device";
+    const power=parseInt(document.getElementById("relay-device-power").value || 100);
+    fetch(API_BASE + "/add_device",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({relay:relayNo,name:name,power:power})
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        renderRelayDevices(d.devices || []);
+        showToast("Relay "+relayNo+" saved as "+name);
+        addLog("success","Relay "+relayNo+" configured as "+name);
+        loadProfessionalSettings();
+    })
+    .catch(()=>{
+        showToast("Relay device save failed");
+        addLog("danger","Relay device save failed");
+    });
+}
+function removeRelayDevice(){
+    const relayNo=parseInt(document.getElementById("relay-number").value);
+    fetch(API_BASE + "/remove_device/" + relayNo)
+    .then(r=>r.json())
+    .then(d=>{
+        renderRelayDevices(d.devices || []);
+        showToast("Relay "+relayNo+" removed");
+        addLog("warning","Relay "+relayNo+" marked as not installed");
+    })
+    .catch(()=>showToast("Remove failed"));
+}
+function testSelectedRelay(){
+    const relayNo=parseInt(document.getElementById("relay-number").value);
+    fetch(API_BASE + "/test_relay/" + relayNo)
+    .then(r=>r.json())
+    .then(d=>{
+        showToast(d.status || "Relay test completed");
+        addLog("info",d.status || "Relay test completed");
+    })
+    .catch(()=>showToast("Relay test failed"));
+}
+setTimeout(loadRelayDevices,800);
+
+
+/* ===== FINAL BUTTON FIXES ===== */
+function backendURL(path){
+    return API_BASE + path;
+}
+
+function notifyUser(message, type="info"){
+    if(typeof showToast === "function"){
+        showToast(message);
+    }else{
+        alert(message);
+    }
+    if(typeof addLog === "function"){
+        addLog(type, message);
+    }
+}
+
+function toggleCamera(){
+    fetch(backendURL("/toggle_camera"))
+    .then(r => r.json())
+    .then(d => {
+        notifyUser("Camera: " + (d.camera || "Updated"), "success");
+        if(typeof updateCameraStatus === "function") updateCameraStatus();
+        if(typeof loadProfessionalSettings === "function") loadProfessionalSettings();
+    })
+    .catch(() => notifyUser("Camera control failed", "danger"));
+}
+
+function exportPDF(){
+    window.open(backendURL("/export_pdf"), "_blank");
+}
+
+function exportCSV(){
+    window.open(backendURL("/export_csv"), "_blank");
+}
+
+function resetEnergy(){
+    if(!confirm("Reset energy statistics?")) return;
+    fetch(backendURL("/reset_energy"))
+    .then(r => r.json())
+    .then(d => {
+        notifyUser(d.status || "Energy statistics reset", "success");
+        if(typeof updateSystem === "function") updateSystem();
+    })
+    .catch(() => notifyUser("Reset energy failed", "danger"));
+}
+
+function clearActivityLogs(){
+    if(!confirm("Clear activity logs?")) return;
+    fetch(backendURL("/clear_activity"))
+    .then(r => r.json())
+    .then(d => notifyUser(d.status || "Activity logs cleared", "success"))
+    .catch(() => notifyUser("Clear logs failed", "danger"));
+}
+
+function testHardware(endpoint){
+    fetch(backendURL("/" + endpoint))
+    .then(r => r.json())
+    .then(d => notifyUser(d.status || "Hardware test completed", "success"))
+    .catch(() => notifyUser("Hardware test failed", "danger"));
+}
+
+function testCamera(){
+    testHardware("test_camera");
+}
+
+function testGas(){
+    testHardware("test_gas");
+}
+
+function testRelay(){
+    testHardware("test_relay");
+}
+
+function testBuzzer(){
+    testHardware("test_buzzer");
+}
+
+function restartService(){
+    if(!confirm("Restart Flask service?")) return;
+    fetch(backendURL("/restart_service"))
+    .then(() => notifyUser("Service restarting...", "warning"))
+    .catch(() => notifyUser("Restart service failed", "danger"));
+}
+
+function restartPi(){
+    if(!confirm("Restart Raspberry Pi?")) return;
+    fetch(backendURL("/restart_pi"))
+    .then(() => notifyUser("Raspberry Pi restarting...", "warning"))
+    .catch(() => notifyUser("Restart Pi failed", "danger"));
+}
+
+function shutdownPi(){
+    if(!confirm("Shutdown Raspberry Pi?")) return;
+    fetch(backendURL("/shutdown_pi"))
+    .then(() => notifyUser("Raspberry Pi shutting down...", "warning"))
+    .catch(() => notifyUser("Shutdown Pi failed", "danger"));
+}
+
+function saveProfessionalSettings(){
+    const getVal = (id, fallback="") => {
+        const el = document.getElementById(id);
+        return el ? el.value : fallback;
+    };
+    const isOn = (id) => {
+        const el = document.getElementById(id);
+        return el ? el.classList.contains("active") : false;
+    };
+
+    const payload = {
+        system_mode: getVal("set-system-mode", "Office"),
+        auto_off_delay: parseInt(getVal("set-auto-off", "20")),
+        dashboard_refresh_rate: parseInt(getVal("set-refresh", "2")),
+        human_detection: isOn("set-human"),
+        worker_detection: isOn("set-worker"),
+        ai_sensitivity: getVal("set-ai-sensitivity", "Medium"),
+        camera_enabled: isOn("set-camera"),
+        camera_resolution: getVal("set-camera-resolution", "720p"),
+        camera_refresh_rate: parseInt(getVal("set-camera-refresh", "15")),
+        gas_detection: isOn("set-gas"),
+        buzzer: isOn("set-buzzer"),
+        email_alerts: isOn("set-email"),
+        emergency_shutdown: isOn("set-emergency"),
+        auto_logout_minutes: parseInt(getVal("set-auto-logout", "15")),
+        theme: getVal("set-theme", "Dark")
+    };
+
+    fetch(backendURL("/save_settings"), {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+    })
+    .then(r => r.json())
+    .then(() => {
+        notifyUser("Settings saved successfully", "success");
+        if(typeof loadProfessionalSettings === "function") loadProfessionalSettings();
+        if(typeof updateSystem === "function") updateSystem();
+    })
+    .catch(() => notifyUser("Settings save failed", "danger"));
+}
+
+function setSettingToggle(id){
+    const el = document.getElementById(id);
+    if(el && !el.dataset.finalBound){
+        el.dataset.finalBound = "1";
+        el.onclick = () => el.classList.toggle("active");
+    }
+}
+
+["set-human","set-worker","set-camera","set-gas","set-buzzer","set-email","set-emergency"].forEach(setSettingToggle);
+
+function renderRelayDevices(devices){
+    const box = document.getElementById("relay-device-list");
+    if(!box) return;
+
+    box.innerHTML = "";
+    (devices || []).forEach(d => {
+        const available = d.available || d.enabled;
+        const item = document.createElement("div");
+        item.className = "relay-list-item";
+        item.innerHTML = `
+            <div>
+                <strong>Relay ${d.relay} → ${d.name}</strong>
+                <small>${d.power}W • ${d.status || "OFF"}</small>
+            </div>
+            <span class="relay-badge ${available ? "online":"pending"}">${available ? "Available":"Not Installed"}</span>
+        `;
+        box.appendChild(item);
+    });
+}
+
+function loadRelayDevices(){
+    fetch(backendURL("/devices"))
+    .then(r => r.json())
+    .then(renderRelayDevices)
+    .catch(() => console.warn("Relay devices not loaded"));
+}
+
+function addRelayDevice(){
+    const relayNo = parseInt(document.getElementById("relay-number").value);
+    const name = document.getElementById("relay-device-name").value || "Device";
+    const power = parseInt(document.getElementById("relay-device-power").value || 100);
+
+    fetch(backendURL("/add_device"), {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({relay: relayNo, name, power})
+    })
+    .then(r => r.json())
+    .then(d => {
+        renderRelayDevices(d.devices || []);
+        notifyUser("Relay " + relayNo + " saved as " + name, "success");
+    })
+    .catch(() => notifyUser("Relay device save failed", "danger"));
+}
+
+function removeRelayDevice(){
+    const relayNo = parseInt(document.getElementById("relay-number").value);
+    fetch(backendURL("/remove_device/" + relayNo))
+    .then(r => r.json())
+    .then(d => {
+        renderRelayDevices(d.devices || []);
+        notifyUser("Relay " + relayNo + " removed", "warning");
+    })
+    .catch(() => notifyUser("Remove relay failed", "danger"));
+}
+
+function testSelectedRelay(){
+    const relayNo = parseInt(document.getElementById("relay-number").value);
+    fetch(backendURL("/test_relay/" + relayNo))
+    .then(r => r.json())
+    .then(d => notifyUser(d.status || "Relay test completed", "success"))
+    .catch(() => notifyUser("Relay test failed", "danger"));
+}
+
+function loadProfessionalSettings(){
+    fetch(backendURL("/get_settings"))
+    .then(r => r.json())
+    .then(s => {
+        const setVal = (id, val) => {
+            const el = document.getElementById(id);
+            if(el && val !== undefined && val !== null) el.value = val;
+        };
+        const setToggle = (id, val) => {
+            const el = document.getElementById(id);
+            if(!el) return;
+            if(val) el.classList.add("active");
+            else el.classList.remove("active");
+        };
+
+        setVal("set-system-mode", s.system_mode);
+        setVal("set-auto-off", s.auto_off_delay);
+        setVal("set-refresh", s.dashboard_refresh_rate);
+        setVal("set-ai-sensitivity", s.ai_sensitivity);
+        setVal("set-camera-resolution", s.camera_resolution);
+        setVal("set-camera-refresh", s.camera_refresh_rate);
+        setVal("set-auto-logout", s.auto_logout_minutes);
+        setVal("set-theme", s.theme);
+
+        setToggle("set-human", s.human_detection);
+        setToggle("set-worker", s.worker_detection);
+        setToggle("set-camera", s.camera_enabled);
+        setToggle("set-gas", s.gas_detection);
+        setToggle("set-buzzer", s.buzzer);
+        setToggle("set-email", s.email_alerts);
+        setToggle("set-emergency", s.emergency_shutdown);
+
+        if(s.devices) renderRelayDevices(s.devices);
+    })
+    .catch(() => console.warn("Settings not loaded"));
+}
+
+setTimeout(() => {
+    loadProfessionalSettings();
+    loadRelayDevices();
+}, 600);
+
+
+/* ===== FINAL EMAIL + REPORT + THEME FIXES ===== */
+function applyTheme(theme){
+    if(theme === "Light"){
+        document.body.classList.add("light-theme");
+    }else{
+        document.body.classList.remove("light-theme");
+    }
+}
+
+function weeklyPDF(){
+    window.open(getBackendURL("/weekly_pdf_report"), "_blank");
+}
+
+function monthlyPDF(){
+    window.open(getBackendURL("/monthly_pdf_report"), "_blank");
+}
+
+function testEmail(){
+    fetch(getBackendURL("/test_email"))
+    .then(r=>r.json())
+    .then(d=>{
+        showToast(d.status || "Email checked");
+        const last = document.getElementById("last-email-setting");
+        if(last && d.last_email){ last.innerText = d.last_email; }
+    })
+    .catch(()=>showToast("Test email failed"));
+}
+
+function exportPDF(){
+    window.open(getBackendURL("/export_pdf"), "_blank");
+}
+
+function exportCSV(){
+    window.open(getBackendURL("/export_csv"), "_blank");
+}
+
+function resetEnergy(){
+    if(!confirm("Reset energy statistics?")) return;
+    fetch(API_BASE + "/reset_energy")
+    .then(r=>r.json())
+    .then(d=>showToast(d.status || "Energy reset"))
+    .catch(()=>showToast("Reset energy failed"));
+}
+
+function clearActivityLogs(){
+    if(!confirm("Clear activity logs?")) return;
+    fetch(API_BASE + "/clear_activity")
+    .then(r=>r.json())
+    .then(d=>showToast(d.status || "Logs cleared"))
+    .catch(()=>showToast("Clear logs failed"));
+}
+
+/* Patch save/load settings for email and theme */
+const __oldSaveProfessionalSettings = window.saveProfessionalSettings;
+window.saveProfessionalSettings = function(){
+    const getVal = (id, fallback="") => {
+        const el = document.getElementById(id);
+        return el ? el.value : fallback;
+    };
+    const isOn = (id) => {
+        const el = document.getElementById(id);
+        return el ? el.classList.contains("active") : false;
+    };
+
+    const payload = {
+        system_mode: getVal("set-system-mode", "Office"),
+        auto_off_delay: parseInt(getVal("set-auto-off", "20")),
+        dashboard_refresh_rate: parseInt(getVal("set-refresh", "2")),
+        human_detection: isOn("set-human"),
+        worker_detection: isOn("set-worker"),
+        ai_sensitivity: getVal("set-ai-sensitivity", "Medium"),
+        camera_enabled: isOn("set-camera"),
+        camera_resolution: getVal("set-camera-resolution", "720p"),
+        camera_refresh_rate: parseInt(getVal("set-camera-refresh", "15")),
+        gas_detection: isOn("set-gas"),
+        buzzer: isOn("set-buzzer"),
+        email_alerts: isOn("set-email"),
+        emergency_shutdown: isOn("set-emergency"),
+        auto_logout_minutes: parseInt(getVal("set-auto-logout", "15")),
+        theme: getVal("set-theme", "Dark"),
+        alert_email_to: getVal("set-alert-email", "umergujjarg391@gmail.com")
+    };
+
+    fetch(API_BASE + "/save_settings", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(payload)
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        showToast("Settings saved successfully");
+        applyTheme(payload.theme);
+        if(d.settings && d.settings.last_email_sent){
+            const last = document.getElementById("last-email-setting");
+            if(last) last.innerText = d.settings.last_email_sent;
+        }
+    })
+    .catch(()=>showToast("Settings save failed"));
+};
+
+const __oldLoadProfessionalSettings = window.loadProfessionalSettings;
+window.loadProfessionalSettings = function(){
+    fetch(API_BASE + "/get_settings")
+    .then(r=>r.json())
+    .then(s=>{
+        const setVal = (id,val)=>{ const el=document.getElementById(id); if(el && val!==undefined && val!==null) el.value=val; };
+        const setToggle = (id,val)=>{ const el=document.getElementById(id); if(!el)return; val ? el.classList.add("active") : el.classList.remove("active"); };
+
+        setVal("set-system-mode", s.system_mode);
+        setVal("set-auto-off", s.auto_off_delay);
+        setVal("set-refresh", s.dashboard_refresh_rate);
+        setVal("set-ai-sensitivity", s.ai_sensitivity);
+        setVal("set-camera-resolution", s.camera_resolution);
+        setVal("set-camera-refresh", s.camera_refresh_rate);
+        setVal("set-auto-logout", s.auto_logout_minutes);
+        setVal("set-theme", s.theme);
+        setVal("set-alert-email", s.alert_email_to);
+
+        setToggle("set-human", s.human_detection);
+        setToggle("set-worker", s.worker_detection);
+        setToggle("set-camera", s.camera_enabled);
+        setToggle("set-gas", s.gas_detection);
+        setToggle("set-buzzer", s.buzzer);
+        setToggle("set-email", s.email_alerts);
+        setToggle("set-emergency", s.emergency_shutdown);
+
+        const last = document.getElementById("last-email-setting");
+        if(last) last.innerText = s.last_email_sent || "No Alerts Sent";
+        applyTheme(s.theme || "Dark");
+
+        if(typeof renderRelayDevices === "function" && s.devices){
+            renderRelayDevices(s.devices);
+        }
+    })
+    .catch(()=>console.warn("Settings not loaded"));
+};
+
+setTimeout(()=>{ if(window.loadProfessionalSettings) loadProfessionalSettings(); }, 900);
+
+
+
+/* ===== FINAL HAMBURGER MENU JS ===== */
+function toggleMobileMenu(){
+    document.body.classList.toggle("menu-open");
+}
+function closeMobileMenu(){
+    document.body.classList.remove("menu-open");
+}
+
+const __oldShowSectionHamburger = window.showSection;
+window.showSection = function(id, btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    const sec = document.getElementById(id);
+    if(sec) sec.classList.add('active');
+
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+
+    if(window.innerWidth <= 1024){
+        closeMobileMenu();
+        setTimeout(()=>window.scrollTo({top:0, behavior:"smooth"}), 60);
+    }
+};
+
+
+/* ===== FINAL NO STUCK BLUR JS FIX ===== */
+document.addEventListener("DOMContentLoaded", function(){
+    document.body.classList.remove("menu-open");
+});
+
+function openMobileMenu(){
+    document.body.classList.add("menu-open");
+}
+
+function closeMobileMenu(){
+    document.body.classList.remove("menu-open");
+}
+
+function toggleMobileMenu(){
+    document.body.classList.toggle("menu-open");
+}
+
+
+/* ===== FINAL HAMBURGER HIDE/SHOW BEHAVIOR ===== */
+document.addEventListener("DOMContentLoaded", function(){
+    document.body.classList.remove("menu-open");
+});
+
+function toggleMobileMenu(){
+    document.body.classList.toggle("menu-open");
+}
+function closeMobileMenu(){
+    document.body.classList.remove("menu-open");
+}
+
+window.showSection = function(id, btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    const sec = document.getElementById(id);
+    if(sec) sec.classList.add('active');
+
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+
+    if(window.innerWidth <= 1024){
+        closeMobileMenu();
+        setTimeout(()=>window.scrollTo({top:0, behavior:"smooth"}), 50);
+    }
+};
+
+
+/* ===== FINAL VALIDATION + SERVICE + THEME PATCH ===== */
+function validateEmailAddress(email){
+    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(String(email || "").trim());
+}
+
+function restartService(){
+    if(!confirm("Restart fyp.service now? Dashboard may disconnect for a few seconds.")) return;
+    fetch(getBackendURL("/restart_service"))
+    .then(r=>r.json())
+    .then(d=>showToast(d.status || "Restarting service..."))
+    .catch(()=>showToast("Restart service failed"));
+}
+
+function applyTheme(theme){
+    if(theme === "Light"){
+        document.body.classList.add("light-theme");
+    }else{
+        document.body.classList.remove("light-theme");
+    }
+}
+
+function testEmail(){
+    const emailEl = document.getElementById("set-alert-email");
+    const email = emailEl ? emailEl.value.trim() : "";
+    if(!validateEmailAddress(email)){
+        showToast("Invalid email address");
+        if(emailEl) emailEl.focus();
+        return;
+    }
+
+    // save settings first so backend uses latest receiver
+    if(window.saveProfessionalSettings){
+        saveProfessionalSettings(false);
+    }
+
+    setTimeout(()=>{
+        fetch(getBackendURL("/test_email"))
+        .then(r=>r.json())
+        .then(d=>{
+            if(d.error){ showToast(d.error); return; }
+            showToast(d.status || "Test email sent");
+            const last = document.getElementById("last-email-setting");
+            if(last && d.last_email){ last.innerText = d.last_email; }
+        })
+        .catch(()=>showToast("Test email failed"));
+    }, 500);
+}
+
+function weeklyPDF(){ window.open(getBackendURL("/weekly_pdf_report"), "_blank"); }
+function monthlyPDF(){ window.open(getBackendURL("/monthly_pdf_report"), "_blank"); }
+function exportPDF(){ window.open(getBackendURL("/export_pdf"), "_blank"); }
+function exportCSV(){ window.open(getBackendURL("/export_csv"), "_blank"); }
+
+/* Better save settings with email validation and optional toast */
+window.saveProfessionalSettings = function(showMsg=true){
+    const getVal = (id, fallback="") => {
+        const el = document.getElementById(id);
+        return el ? el.value : fallback;
+    };
+    const isOn = (id) => {
+        const el = document.getElementById(id);
+        return el ? el.classList.contains("active") : false;
+    };
+
+    const email = getVal("set-alert-email", "").trim();
+    if(!validateEmailAddress(email)){
+        showToast("Invalid email address");
+        const emailEl = document.getElementById("set-alert-email");
+        if(emailEl) emailEl.focus();
+        return;
+    }
+
+    const payload = {
+        system_mode: getVal("set-system-mode", "Office"),
+        auto_off_delay: parseInt(getVal("set-auto-off", "20")),
+        dashboard_refresh_rate: parseInt(getVal("set-refresh", "2")),
+        human_detection: isOn("set-human"),
+        worker_detection: isOn("set-worker"),
+        ai_sensitivity: getVal("set-ai-sensitivity", "Medium"),
+        camera_enabled: isOn("set-camera"),
+        camera_resolution: getVal("set-camera-resolution", "720p"),
+        camera_refresh_rate: parseInt(getVal("set-camera-refresh", "15")),
+        gas_detection: isOn("set-gas"),
+        buzzer: isOn("set-buzzer"),
+        email_alerts: isOn("set-email"),
+        emergency_shutdown: isOn("set-emergency"),
+        auto_logout_minutes: parseInt(getVal("set-auto-logout", "15")),
+        theme: getVal("set-theme", "Dark"),
+        alert_email_to: email
+    };
+
+    fetch(getBackendURL("/save_settings"), {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        if(d.error || d.message === "Invalid email address"){ showToast(d.message || d.error); return; }
+        applyTheme(payload.theme);
+        if(showMsg) showToast("Settings saved successfully");
+    })
+    .catch(()=>showToast("Settings save failed"));
+};
+
+
+/* ===== FINAL SAVE EMAIL FIX PATCH ===== */
+window.saveProfessionalSettings = function(showMsg=true){
+    const getVal = (id, fallback="") => {
+        const el = document.getElementById(id);
+        return el ? el.value : fallback;
+    };
+    const isOn = (id) => {
+        const el = document.getElementById(id);
+        return el ? el.classList.contains("active") : false;
+    };
+
+    const email = getVal("set-alert-email", "").trim();
+    if(!validateEmailAddress(email)){
+        showToast("Invalid email address");
+        const emailEl = document.getElementById("set-alert-email");
+        if(emailEl) emailEl.focus();
+        return Promise.reject("Invalid email");
+    }
+
+    const payload = {
+        system_mode: getVal("set-system-mode", "Office"),
+        auto_off_delay: parseInt(getVal("set-auto-off", "20")),
+        dashboard_refresh_rate: parseInt(getVal("set-refresh", "2")),
+        human_detection: isOn("set-human"),
+        worker_detection: isOn("set-worker"),
+        ai_sensitivity: getVal("set-ai-sensitivity", "Medium"),
+        camera_enabled: isOn("set-camera"),
+        camera_resolution: getVal("set-camera-resolution", "720p"),
+        camera_refresh_rate: parseInt(getVal("set-camera-refresh", "15")),
+        gas_detection: isOn("set-gas"),
+        buzzer: isOn("set-buzzer"),
+        email_alerts: isOn("set-email"),
+        emergency_shutdown: isOn("set-emergency"),
+        auto_logout_minutes: parseInt(getVal("set-auto-logout", "15")),
+        theme: getVal("set-theme", "Dark"),
+        alert_email_to: email
+    };
+
+    return fetch(getBackendURL("/save_settings"), {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+    })
+    .then(async r=>{
+        const d = await r.json();
+        if(!r.ok){ throw new Error(d.message || d.error || "Settings save failed"); }
+        applyTheme(payload.theme);
+        if(showMsg) showToast("Settings saved successfully");
+        return d;
+    })
+    .catch(err=>{
+        showToast(String(err.message || err));
+        throw err;
+    });
+};
+
+window.testEmail = function(){
+    const emailEl = document.getElementById("set-alert-email");
+    const email = emailEl ? emailEl.value.trim() : "";
+    if(!validateEmailAddress(email)){
+        showToast("Invalid email address");
+        if(emailEl) emailEl.focus();
+        return;
+    }
+
+    saveProfessionalSettings(false)
+    .then(()=>{
+        return fetch(getBackendURL("/test_email"));
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        if(d.error){ showToast(d.error); return; }
+        showToast(d.status || "Test email sent");
+        const last = document.getElementById("last-email-setting");
+        if(last && d.last_email){ last.innerText = d.last_email; }
+    })
+    .catch(()=>{});
+};
+
+</script>
+
+</body>
+</html>

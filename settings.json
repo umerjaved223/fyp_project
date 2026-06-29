@@ -1,0 +1,55 @@
+{
+    "auto_off_delay": 20,
+    "device_name": "Bulb",
+    "device_power_watts": 100,
+    "system_mode": "Office",
+    "human_detection": true,
+    "worker_detection": true,
+    "ai_sensitivity": "Medium",
+    "camera_enabled": true,
+    "camera_resolution": "720p",
+    "camera_refresh_rate": 15,
+    "gas_detection": false,
+    "buzzer": false,
+    "email_alerts": true,
+    "emergency_shutdown": true,
+    "dashboard_refresh_rate": 2,
+    "auto_logout_minutes": 15,
+    "theme": "Dark",
+    "alert_email_to": "umergujjarg391@gmail.com",
+    "last_email_sent": "2026-06-29 13:03:25",
+    "devices": [
+        {
+            "relay": 1,
+            "name": "Bulb",
+            "power": 100,
+            "enabled": true,
+            "available": true,
+            "status": "OFF"
+        },
+        {
+            "relay": 2,
+            "name": "Fan",
+            "power": 75,
+            "enabled": false,
+            "available": false,
+            "status": "Not Installed"
+        },
+        {
+            "relay": 3,
+            "name": "AC",
+            "power": 1500,
+            "enabled": false,
+            "available": false,
+            "status": "Not Installed"
+        },
+        {
+            "relay": 4,
+            "name": "Custom Device",
+            "power": 100,
+            "enabled": false,
+            "available": false,
+            "status": "Not Installed"
+        }
+    ]
+}

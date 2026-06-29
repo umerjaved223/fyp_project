@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+    --scale:.67;
+    --bg:#050816;
+    --panel:rgba(9,16,42,.76);
+    --glass:rgba(18,28,68,.52);
+    --line:rgba(139,92,246,.55);
+    --text:#ffffff;
+    --muted:#b8c2ea;
+    --blue:#2f8cff;
+    --cyan:#00d9ff;
+    --purple:#8b5cf6;
+    --pink:#d946ef;
+    --green:#00ff88;
+}
+
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 18% 10%,rgba(47,140,255,.24),transparent 30%),
+        radial-gradient(circle at 84% 14%,rgba(217,70,239,.22),transparent 30%),
+        linear-gradient(135deg,#020716,#08142f 55%,#040817);
+    color:var(--text);
+    min-height:100vh;
+    overflow:auto;
+}
+
+/* 67% FIXED UI */
+.page-scale{
+    width:calc(100vw / var(--scale));
+    min-height:calc(100vh / var(--scale));
+    transform:scale(var(--scale));
+    transform-origin:top left;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+}
+
+.login-shell{
+    width:1420px;
+    height:860px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border:1px solid var(--line);
+    border-radius:30px;
+    overflow:hidden;
+    background:rgba(4,10,28,.72);
+    backdrop-filter:blur(20px);
+    box-shadow:0 0 45px rgba(139,92,246,.25), inset 0 0 0 1px rgba(255,255,255,.04);
+    position:relative;
+}
+
+.login-shell::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(47,140,255,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(47,140,255,.055) 1px, transparent 1px);
+    background-size:36px 36px;
+    opacity:.55;
+    pointer-events:none;
+}
+
+/* LEFT */
+.left-panel{
+    position:relative;
+    padding:82px 72px 40px;
+    border-right:1px solid rgba(139,92,246,.24);
+    overflow:hidden;
+}
+
+.left-panel::after{
+    content:"";
+    position:absolute;
+    width:580px;
+    height:580px;
+    left:120px;
+    bottom:-170px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(0,217,255,.24),rgba(139,92,246,.12),transparent 68%);
+    filter:blur(10px);
+}
+
+.left-content{position:relative;z-index:2}
+
+.brand-row{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.shield-logo{
+    width:92px;
+    height:92px;
+    border-radius:24px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#2563eb,#8b5cf6,#d946ef);
+    box-shadow:0 0 35px rgba(139,92,246,.50);
+}
+
+svg{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.shield-logo svg{width:55px;height:55px;color:white}
+
+.title{
+    font-size:50px;
+    line-height:1.10;
+    letter-spacing:-1.5px;
+    font-weight:900;
+}
+
+.title span{color:#9b7cff}
+
+.subtitle{
+    margin:24px 0 28px 116px;
+    color:#a8d8ff;
+    font-size:20px;
+}
+
+.neon-line{
+    width:88px;
+    height:3px;
+    margin:0 0 34px 116px;
+    background:linear-gradient(90deg,var(--pink),var(--blue));
+    border-radius:10px;
+    box-shadow:0 0 14px rgba(217,70,239,.9);
+}
+
+.feature-list{margin-left:44px}
+
+.feature{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin:22px 0;
+}
+
+.feature-icon{
+    width:58px;
+    height:58px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background:rgba(47,140,255,.13);
+    color:var(--cyan);
+    border:1px solid rgba(47,140,255,.22);
+}
+
+.feature-icon.green{color:var(--green);background:rgba(0,255,136,.10)}
+.feature-icon.purple{color:var(--purple);background:rgba(139,92,246,.14)}
+
+.feature-icon svg{width:28px;height:28px}
+.feature h3{font-size:18px;margin-bottom:5px}
+.feature p{font-size:15px;color:var(--muted)}
+
+/* CSS Raspberry Pi Illustration */
+.pi-scene{
+    position:absolute;
+    left:52%;
+    bottom:50px;
+    transform:translateX(-50%);
+    width:430px;
+    height:250px;
+    z-index:1;
+}
+
+.pi-glow{
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+    width:390px;
+    height:85px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(0,217,255,.50),rgba(139,92,246,.20),transparent 72%);
+    filter:blur(8px);
+}
+
+.pi-board{
+    position:absolute;
+    left:70px;
+    bottom:58px;
+    width:292px;
+    height:94px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#0a7c4b,#0dd97f);
+    border:2px solid rgba(255,255,255,.24);
+    transform:skewX(-12deg);
+    box-shadow:0 0 38px rgba(0,217,255,.46);
+}
+
+.pi-chip{
+    position:absolute;
+    left:172px;
+    bottom:88px;
+    width:72px;
+    height:50px;
+    border-radius:8px;
+    background:#071326;
+    border:1px solid rgba(255,255,255,.18);
+    transform:skewX(-12deg);
+}
+
+.pi-port{
+    position:absolute;
+    bottom:82px;
+    width:42px;
+    height:52px;
+    background:#d7e4f6;
+    border-radius:7px;
+    border:2px solid #7f8ea3;
+    transform:skewX(-12deg);
+}
+
+.pi-port.p1{right:114px}
+.pi-port.p2{right:64px}
+
+.pi-shield{
+    position:absolute;
+    left:50%;
+    bottom:112px;
+    transform:translateX(-50%);
+    width:110px;
+    height:128px;
+    filter:drop-shadow(0 0 24px rgba(0,217,255,.9));
+}
+
+.pi-shield svg{
+    width:100%;
+    height:100%;
+    stroke:#58d8ff;
+    fill:rgba(0,217,255,.08);
+}
+
+.pi-lock{
+    position:absolute;
+    left:50%;
+    bottom:152px;
+    transform:translateX(-50%);
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#7c3aed,#00d9ff);
+    display:grid;
+    place-items:center;
+    box-shadow:0 0 18px rgba(0,217,255,.7);
+}
+
+.pi-lock svg{width:24px;height:24px;color:white}
+
+/* RIGHT */
+.right-panel{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:62px;
+}
+
+.login-card{
+    width:100%;
+    max-width:560px;
+    padding:54px 50px;
+    border-radius:30px;
+    background:linear-gradient(180deg,rgba(25,35,82,.58),rgba(15,20,50,.46));
+    border:1px solid rgba(185,120,255,.60);
+    backdrop-filter:blur(24px);
+    box-shadow:0 0 42px rgba(217,70,239,.26), inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+.avatar{
+    width:92px;
+    height:92px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    box-shadow:0 0 28px rgba(139,92,246,.45);
+}
+
+.avatar svg{width:46px;height:46px;color:white}
+
+.login-card h2{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.login-card h2 span{color:var(--purple)}
+.login-card .welcome{text-align:center;color:#c9d1ee;margin-bottom:32px;font-size:16px}
+
+.form-group{margin-bottom:22px}
+.form-group label{display:block;margin:0 0 9px 44px;font-size:16px;color:#f2f5ff}
+
+.input-wrap{position:relative}
+
+.input-icon{
+    position:absolute;
+    left:0;
+    top:0;
+    width:64px;
+    height:62px;
+    display:grid;
+    place-items:center;
+    color:#d8e2ff;
+    border-right:1px solid rgba(255,255,255,.10);
+}
+
+.input-icon svg{width:24px;height:24px}
+
+.eye-icon{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#d8e2ff;
+}
+
+.eye-icon svg{width:23px;height:23px}
+
+input{
+    width:100%;
+    height:62px;
+    padding:0 58px 0 82px;
+    border-radius:13px;
+    border:1px solid rgba(255,255,255,.16);
+    outline:none;
+    background:rgba(255,255,255,.045);
+    color:white;
+    font-size:17px;
+}
+
+input::placeholder{color:#aeb8d8}
+input:focus{border-color:#8b5cf6;box-shadow:0 0 0 4px rgba(139,92,246,.12)}
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:8px 0 28px;
+    color:#cdd5ee;
+    font-size:16px;
+}
+
+.check{display:flex;align-items:center;gap:9px}
+.check span{width:20px;height:20px;border:1px solid rgba(255,255,255,.38);border-radius:5px}
+.options a{color:#f08cff;text-decoration:none}
+
+button{
+    width:100%;
+    height:66px;
+    border:0;
+    border-radius:14px;
+    cursor:pointer;
+    background:linear-gradient(90deg,#2f8cff,#d946ef);
+    color:white;
+    font-size:22px;
+    font-weight:900;
+    box-shadow:0 12px 28px rgba(217,70,239,.22);
+}
+
+button svg{width:20px;height:20px;vertical-align:middle;margin-right:8px}
+
+.login-footer{
+    position:absolute;
+    left:34px;
+    right:34px;
+    bottom:18px;
+    height:54px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#cfd4ea;
+    font-size:16px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.login-footer span{display:flex;align-items:center;gap:8px}
+.pi-mini{width:24px;height:24px}
+
+@media(max-width:900px){
+    :root{--scale:1}
+    body{overflow:auto}
+    .page-scale{width:100%;min-height:100vh;transform:none;padding:14px}
+    .login-shell{width:100%;height:auto;grid-template-columns:1fr}
+    .left-panel{min-height:560px;padding:42px 28px}
+    .title{font-size:34px}
+    .subtitle,.neon-line{margin-left:0}
+    .feature-list{margin-left:0}
+    .right-panel{padding:28px 22px 92px}
+    .login-footer{position:static;padding:14px 22px;flex-wrap:wrap;height:auto;gap:10px}
+}
+
+/* ===== FINAL USER FIX ===== */
+@media(max-width:900px){
+
+    :root{
+        --scale:1;
+    }
+
+    body{
+        overflow:auto;
+    }
+
+    .page-scale{
+        width:100%;
+        min-height:100vh;
+        transform:none;
+        padding:10px;
+    }
+
+    .login-shell{
+        width:100%;
+        height:auto;
+        grid-template-columns:1fr;
+    }
+
+    .left-panel{
+        padding:25px;
+        min-height:auto;
+    }
+
+    .title{
+        font-size:32px;
+    }
+
+    .subtitle,
+    .neon-line,
+    .feature-list{
+        margin-left:0;
+    }
+
+    .right-panel{
+        padding:20px;
+    }
+
+    .login-card{
+        padding:25px;
+    }
+
+    .login-card h2{
+        font-size:30px;
+    }
+
+    .login-footer{
+        position:static;
+        padding:15px;
+        flex-direction:column;
+        gap:10px;
+        text-align:center;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="page-scale">
+<div class="login-shell">
+
+<section class="left-panel">
+    <div class="left-content">
+        <div class="brand-row">
+            <div class="shield-logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12h6"/>
+                    <path d="M12 9v6"/>
+                </svg>
+            </div>
+            <h1 class="title">Smart <span>Energy</span><br>Saving System</h1>
+        </div>
+
+        <p class="subtitle">Real-time AI Monitoring & Energy Management</p>
+        <div class="neon-line"></div>
+
+        <div class="feature-list">
+            <div class="feature">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+                <div><h3>AI Human Detection</h3><p>Real-time detection and monitoring</p></div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon green"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+                <div><h3>Energy Optimization</h3><p>Save energy, reduce cost</p></div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon purple"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div><h3>Gas Leak Protection</h3><p>Instant alerts, maximum safety</p></div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg></div>
+                <div><h3>Raspberry Pi Powered</h3><p>Reliable. Efficient. Intelligent.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="right-panel">
+    <div class="login-card">
+        <div class="avatar">
+            <svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 21v-2a7 7 0 0 1 14 0v2"/><rect x="15" y="11" width="7" height="8" rx="1.5"/><path d="M17 11V9.5a2 2 0 0 1 4 0V11"/></svg>
+        </div>
+
+        <h2>Admin <span>Login</span></h2>
+        <p class="welcome">Welcome back! Please login to your account</p>
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-wrap">
+                    <div class="input-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></div>
+                    <input type="text" name="username" placeholder="Enter your username" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrap">
+                    <div class="input-icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+                    <input type="password" name="password" placeholder="Enter your password" required>
+                    <div class="eye-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                </div>
+            </div>
+
+            <div class="options">
+                <div class="check"><span></span>Remember Me</div>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Login</button>
+        </form>
+    </div>
+</section>
+
+<div class="login-footer">
+    <span><svg width="22" height="22" viewBox="0 0 24 24" stroke="#8b5cf6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Smart Energy Saving System</span>
+    <span>© 2026 All Rights Reserved</span>
+    <span>
+        <svg class="pi-mini" viewBox="0 0 64 64">
+            <circle cx="24" cy="20" r="9" fill="#ff2d75"/><circle cx="40" cy="20" r="9" fill="#ff2d75"/>
+            <circle cx="17" cy="33" r="9" fill="#ff2d75"/><circle cx="32" cy="33" r="10" fill="#ff2d75"/>
+            <circle cx="47" cy="33" r="9" fill="#ff2d75"/><circle cx="25" cy="47" r="9" fill="#ff2d75"/>
+            <circle cx="39" cy="47" r="9" fill="#ff2d75"/>
+            <path d="M31 12C29 4 21 3 16 7c8 1 12 5 15 12" fill="#57d957"/>
+            <path d="M33 12C35 4 43 3 48 7c-8 1-12 5-15 12" fill="#57d957"/>
+        </svg>
+        Powered by Raspberry Pi
+    </span>
+</div>
+
+</div>
+</div>
+</body>
+</html>
