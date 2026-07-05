@@ -1,16 +1,16 @@
 from flask import Flask, render_template, jsonify, Response, request, redirect, session
 from flask_cors import CORS
-from modules.gas_module import check_gas, relay, set_alert_email, get_alert_email, get_last_email_time, send_test_email
+from modules.gas_module import check_gas, relay, set_alert_email, get_alert_email, get_last_email_time, send_test_email, clear_gas_alert
 from modules.human_detection import detect_human
 from modules.energy_module import update_energy
 from modules.camera_manager import get_frame
-from datetime import timedelta
-import cv2, time, threading, psutil, os, json, csv, io, re
+from datetime import timedelta, date, datetime
+import cv2, time, threading, psutil, os, json, csv, io, re, subprocess
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
 from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas as pdfcanvas
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
@@ -21,6 +21,7 @@ PASSWORD = "12345"
 SETTINGS_FILE = "/home/ruf/fyp_project/settings.json"
 DATA_DIR = "/home/ruf/fyp_project/data"
 RUNTIME_DATA_FILE = os.path.join(DATA_DIR, "runtime_data.json")
+runtime_save_lock = threading.Lock()
 
 latest_human = "No Human"
 latest_worker_activity = "No Worker"
@@ -38,6 +39,11 @@ weekly_energy_data = {
     "sat": 0,
     "sun": 0
 }
+WEEKDAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+MONTH_WEEK_KEYS = ["week1", "week2", "week3", "week4", "week5"]
+monthly_energy_data = {k: 0 for k in MONTH_WEEK_KEYS}
+weekly_period_key = None
+monthly_period_key = None
 energy_saved_seconds = 0
 last_energy_check = time.time()
 last_runtime_save = time.time()
@@ -45,9 +51,10 @@ auto_energy_mode = False
 system_armed = False
 device_on = False
 last_human_time = 0
-gas_override = False
+gas_grace_until = 0
 
 AUTO_OFF_DELAY = 20
+ELECTRICITY_RATE_PKR_PER_KWH = 67
 DEVICE_NAME = "Bulb"
 DEVICE_POWER_WATTS = 100
 SYSTEM_MODE = "Office"
@@ -87,16 +94,23 @@ latest_data = {
 def save_runtime_data():
     """Save live data so service restart does not clear reports/logs."""
     try:
-        os.makedirs(DATA_DIR, exist_ok=True)
-        data = {
-            "energy_saved_seconds": energy_saved_seconds,
-            "energy_saved_kwh": energy_saved_kwh,
-            "event_logs": event_logs[-300:],
-            "last_event_state": last_event_state,
-            "weekly_energy_data": weekly_energy_data
-        }
-        with open(RUNTIME_DATA_FILE, "w") as f:
-            json.dump(data, f, indent=4)
+        with runtime_save_lock:
+            os.makedirs(DATA_DIR, exist_ok=True)
+            data = {
+                "energy_saved_seconds": energy_saved_seconds,
+                "energy_saved_kwh": energy_saved_kwh,
+                "event_logs": event_logs[-300:],
+                "last_event_state": last_event_state,
+                "weekly_energy_data": weekly_energy_data,
+                "monthly_energy_data": monthly_energy_data,
+                "weekly_period_key": weekly_period_key,
+                "monthly_period_key": monthly_period_key,
+                "activity_history": activity_history[-50:]
+            }
+            tmp_file = RUNTIME_DATA_FILE + ".tmp"
+            with open(tmp_file, "w") as f:
+                json.dump(data, f, indent=4)
+            os.replace(tmp_file, RUNTIME_DATA_FILE)
     except Exception as e:
         print("Runtime save error:", e)
 
@@ -145,8 +159,10 @@ def current_settings():
 
 def save_settings_file():
     try:
-        with open(SETTINGS_FILE, "w") as f:
+        tmp_file = SETTINGS_FILE + ".tmp"
+        with open(tmp_file, "w") as f:
             json.dump(current_settings(), f, indent=4)
+        os.replace(tmp_file, SETTINGS_FILE)
     except Exception as e:
         print("Settings save error:", e)
 
@@ -189,28 +205,82 @@ def load_settings():
 def load_runtime_data():
     """Load saved live data on app start."""
     global energy_saved_seconds, energy_saved_kwh, event_logs, last_event_state
-    global weekly_energy_data
+    global weekly_energy_data, monthly_energy_data, weekly_period_key, monthly_period_key
     try:
-        if not os.path.exists(RUNTIME_DATA_FILE):
-            return
-        with open(RUNTIME_DATA_FILE, "r") as f:
-            data = json.load(f)
+        if os.path.exists(RUNTIME_DATA_FILE):
+            with open(RUNTIME_DATA_FILE, "r") as f:
+                data = json.load(f)
 
-        energy_saved_seconds = float(data.get("energy_saved_seconds", energy_saved_seconds))
-        energy_saved_kwh = float(data.get("energy_saved_kwh", energy_saved_kwh))
-        weekly_energy_data = data.get("weekly_energy_data",weekly_energy_data)
-        saved_logs = data.get("event_logs", [])
-        if isinstance(saved_logs, list):
-            event_logs.clear()
-            event_logs.extend(saved_logs[-300:])
+            energy_saved_seconds = float(data.get("energy_saved_seconds", energy_saved_seconds))
+            energy_saved_kwh = float(data.get("energy_saved_kwh", energy_saved_kwh))
 
-        saved_state = data.get("last_event_state", {})
-        if isinstance(saved_state, dict):
-            last_event_state.update(saved_state)
+            loaded_weekly = data.get("weekly_energy_data")
+            if isinstance(loaded_weekly, dict):
+                weekly_energy_data.update(loaded_weekly)
 
-        print("Runtime data loaded successfully")
+            loaded_monthly = data.get("monthly_energy_data")
+            if isinstance(loaded_monthly, dict):
+                monthly_energy_data.update(loaded_monthly)
+
+            weekly_period_key = data.get("weekly_period_key", weekly_period_key)
+            monthly_period_key = data.get("monthly_period_key", monthly_period_key)
+
+            saved_logs = data.get("event_logs", [])
+            if isinstance(saved_logs, list):
+                event_logs.clear()
+                event_logs.extend(saved_logs[-300:])
+
+            saved_state = data.get("last_event_state", {})
+            if isinstance(saved_state, dict):
+                last_event_state.update(saved_state)
+
+            saved_history = data.get("activity_history", [])
+            if isinstance(saved_history, list):
+                activity_history.clear()
+                activity_history.extend(saved_history[-50:])
+
+            print("Runtime data loaded successfully")
     except Exception as e:
         print("Runtime load error:", e)
+
+    check_period_rollover()
+
+def current_weekly_period_key():
+    iso_year, iso_week, _ = date.today().isocalendar()
+    return f"{iso_year}-W{iso_week:02d}"
+
+def current_monthly_period_key():
+    today = date.today()
+    return f"{today.year}-{today.month:02d}"
+
+def current_month_week_bucket():
+    day = date.today().day
+    return MONTH_WEEK_KEYS[min((day - 1) // 7, 4)]
+
+def check_period_rollover():
+    """Reset ONLY the weekly/monthly graphs when the real calendar week/month
+    changes. Never touches lifetime totals (energy_saved_seconds/kwh) or logs.
+    Safe to call every tick and at startup - a rollover only happens when the
+    stored period key was already set and genuinely differs from today's."""
+    global weekly_period_key, monthly_period_key
+    week_key = current_weekly_period_key()
+    month_key = current_monthly_period_key()
+
+    if weekly_period_key is not None and weekly_period_key != week_key:
+        for k in WEEKDAY_KEYS:
+            weekly_energy_data[k] = 0
+        weekly_period_key = week_key
+        add_event("New calendar week started - weekly energy graph reset", "INFO")
+    else:
+        weekly_period_key = week_key
+
+    if monthly_period_key is not None and monthly_period_key != month_key:
+        for k in MONTH_WEEK_KEYS:
+            monthly_energy_data[k] = 0
+        monthly_period_key = month_key
+        add_event("New calendar month started - monthly energy graph reset", "INFO")
+    else:
+        monthly_period_key = month_key
 
 def apply_system_mode(mode):
     global SYSTEM_MODE, AUTO_OFF_DELAY, AI_SENSITIVITY, GAS_DETECTION_ENABLED, EMERGENCY_SHUTDOWN_ENABLED
@@ -225,26 +295,28 @@ def apply_system_mode(mode):
     EMERGENCY_SHUTDOWN_ENABLED = True
 
 load_settings()
+load_runtime_data()
 
 def background_detection():
     global latest_human, latest_worker_activity
     while True:
-        try:
-            latest_human, latest_worker_activity = detect_human()
-        except Exception:
-            latest_human, latest_worker_activity = "No Human", "No Worker"
-        time.sleep(1)
-
-threading.Thread(target=background_detection, daemon=True).start()
+        loop_start = time.time()
+        if HUMAN_DETECTION_ENABLED or WORKER_DETECTION_ENABLED:
+            try:
+                latest_human, latest_worker_activity = detect_human()
+            except Exception:
+                latest_human, latest_worker_activity = "No Human", "No Worker"
+        time.sleep(max(0, 1 - (time.time() - loop_start)))
 
 def system_controller():
     global system_armed, device_on, last_human_time, latest_data
-    global gas_override, last_email_alert, energy_saved_seconds, last_energy_check, energy_saved_kwh, auto_energy_mode, last_runtime_save
-    gas_status = check_gas() if GAS_DETECTION_ENABLED else "Gas Disabled"
+    global last_email_alert, energy_saved_seconds, last_energy_check, energy_saved_kwh, auto_energy_mode, last_runtime_save
+    in_gas_grace_period = time.time() < gas_grace_until
+    gas_status = check_gas(suppress=in_gas_grace_period) if GAS_DETECTION_ENABLED else "Gas Disabled"
     human_status = latest_human if HUMAN_DETECTION_ENABLED else "Detection Disabled"
     worker_status = latest_worker_activity if WORKER_DETECTION_ENABLED else "Worker Detection Disabled"
 
-    if gas_status == "Gas Detected" and gas_override and EMERGENCY_SHUTDOWN_ENABLED:
+    if gas_status == "Gas Detected" and EMERGENCY_SHUTDOWN_ENABLED:
         relay.off()
         system_armed = False
         device_on = False
@@ -267,14 +339,18 @@ def system_controller():
         device_on = False
         system_armed = False
         auto_energy_mode = True
+        add_event(AUTO_SHUTDOWN_EVENT_TEXT, "WARNING")
 
     now = time.time()
+    check_period_rollover()
     if auto_energy_mode:
-        energy_saved_seconds += (now - last_energy_check)
+        elapsed = now - last_energy_check
+        energy_saved_seconds += elapsed
+        today = WEEKDAY_KEYS[time.localtime().tm_wday]
+        weekly_energy_data[today] += elapsed / 3600
+        monthly_energy_data[current_month_week_bucket()] += elapsed / 3600
     last_energy_check = now
     energy_saved_kwh = round((DEVICE_POWER_WATTS * (energy_saved_seconds / 3600)) / 1000, 3)
-    today = time.strftime("%a").lower()[:3] 
-    weekly_energy_data[today] = round(energy_saved_seconds / 3600, 2)
     # save runtime every 10 seconds so service restart does not lose energy/logs
     if time.time() - last_runtime_save >= 10:
         save_runtime_data()
@@ -283,7 +359,7 @@ def system_controller():
     device_status = "ON" if device_on else "OFF"
 
     for d in DEVICES:
-        if int(d.get("relay", 0)) == 1:
+        if int(d.get("relay", 0)) == 1 and d.get("enabled", True):
             d["name"] = DEVICE_NAME
             d["power"] = DEVICE_POWER_WATTS
             d["available"] = True
@@ -314,14 +390,15 @@ def system_controller():
     activity_history.append({"time": time.strftime("%H:%M:%S"), "human": 1 if human_status == "Human Detected" else 0, "worker": 1 if worker_status == "Worker Working" else 0})
     if len(activity_history) > 50:
         activity_history.pop(0)
-    gas_override = False
 
 def system_loop():
     while True:
-        system_controller()
-        time.sleep(1)
-
-threading.Thread(target=system_loop, daemon=True).start()
+        loop_start = time.time()
+        try:
+            system_controller()
+        except Exception as e:
+            print("system_controller error:", e)
+        time.sleep(max(0, 1 - (time.time() - loop_start)))
 
 @app.route("/manual_on")
 def manual_on():
@@ -336,9 +413,10 @@ def manual_on():
 
 @app.route("/manual_off")
 def manual_off():
-    global system_armed, device_on
+    global system_armed, device_on, auto_energy_mode
     system_armed = False
     device_on = False
+    auto_energy_mode = False
     relay.off()
     add_event("Device OFF (Manual)", "WARNING")
     return "OFF"
@@ -379,13 +457,13 @@ def activity_chart():
 def weekly_energy():
     return jsonify({
         "days": [
-            {"day":"Mon","hours":weekly_energy_data["mon"]},
-            {"day":"Tue","hours":weekly_energy_data["tue"]},
-            {"day":"Wed","hours":weekly_energy_data["wed"]},
-            {"day":"Thu","hours":weekly_energy_data["thu"]},
-            {"day":"Fri","hours":weekly_energy_data["fri"]},
-            {"day":"Sat","hours":weekly_energy_data["sat"]},
-            {"day":"Sun","hours":weekly_energy_data["sun"]}
+            {"day":"Mon","hours":round(weekly_energy_data["mon"], 2)},
+            {"day":"Tue","hours":round(weekly_energy_data["tue"], 2)},
+            {"day":"Wed","hours":round(weekly_energy_data["wed"], 2)},
+            {"day":"Thu","hours":round(weekly_energy_data["thu"], 2)},
+            {"day":"Fri","hours":round(weekly_energy_data["fri"], 2)},
+            {"day":"Sat","hours":round(weekly_energy_data["sat"], 2)},
+            {"day":"Sun","hours":round(weekly_energy_data["sun"], 2)}
         ],
         "total_kwh": energy_saved_kwh,
         "total_hours": round(energy_saved_seconds / 3600, 2),
@@ -403,9 +481,10 @@ def camera_status():
 
 @app.route("/reset_gas")
 def reset_gas():
-    global gas_override
-    gas_override = True
-    threading.Timer(30, lambda: globals().update(gas_override=False)).start()
+    global gas_grace_until
+    clear_gas_alert()
+    gas_grace_until = time.time() + 30
+    add_event("Gas Alert Reset - 30 Second Grace Period Started", "WARNING")
     return "Gas Alert Reset For 30 Seconds"
 
 @app.route("/pi_health")
@@ -685,25 +764,116 @@ def export_csv():
             "attachment; filename=smart_energy_report.csv"
         }
     )
+def run_system_action(command, log_message, success_message):
+    """Common, reliable pattern for OS-level system actions (service restart,
+    Pi reboot, Pi shutdown): logs the request, launches the command via
+    subprocess.Popen (no shell parsing, returns immediately without waiting
+    for it to finish), and always returns a consistent JSON response.
+    Requires sudo permissions already confirmed present in the sudoers
+    config for each of these exact commands. Every executable in the command
+    list must be an absolute path - this service's PATH is restricted to the
+    venv's bin directory, so PATH-based lookup (e.g. a bare "sudo") fails."""
+    try:
+        add_event(log_message, "WARNING")
+        subprocess.Popen(command)
+        return jsonify({"status": success_message})
+    except Exception as e:
+        add_event(f"{log_message} - FAILED: {e}", "DANGER")
+        return jsonify({"status": "Action failed", "error": str(e)}), 500
+
 @app.route("/restart_service")
 def restart_service():
-    try:
-        add_event("Service Restart Requested From Dashboard", "WARNING")
-        os.system("sudo /bin/systemctl restart fyp.service >/dev/null 2>&1 &")
-        return jsonify({"status": "Restarting fyp.service..."})
-    except Exception as e:
-        return jsonify({"status": "Restart failed", "error": str(e)}), 500
-
+    return run_system_action(
+        ["/usr/bin/sudo", "/bin/systemctl", "restart", "fyp.service"],
+        "Service Restart Requested From Dashboard",
+        "Restarting fyp.service..."
+    )
 
 @app.route("/restart_pi")
 def restart_pi():
-    os.system("/sbin/reboot")
-    return "Restarting Raspberry Pi..."
+    return run_system_action(
+        ["/usr/bin/sudo", "/sbin/reboot"],
+        "Raspberry Pi Restart Requested From Dashboard",
+        "Restarting Raspberry Pi..."
+    )
 
 @app.route("/shutdown_pi")
 def shutdown_pi():
-    os.system("/sbin/shutdown now")
-    return "Shutting Down..."
+    return run_system_action(
+        ["/usr/bin/sudo", "/sbin/shutdown", "now"],
+        "Raspberry Pi Shutdown Requested From Dashboard",
+        "Shutting Down..."
+    )
+
+AUTO_SHUTDOWN_EVENT_TEXT = "Automatic Shutdown - No Human Detected"
+
+def count_auto_shutdowns_by_day():
+    """Real automatic-shutdown events (never manual) that happened on each
+    weekday of the CURRENT calendar week, derived from event_logs timestamps."""
+    counts = {k: 0 for k in WEEKDAY_KEYS}
+    today = date.today()
+    iso_year, iso_week, _ = today.isocalendar()
+    for e in event_logs:
+        if AUTO_SHUTDOWN_EVENT_TEXT not in e.get("event", ""):
+            continue
+        try:
+            dt = datetime.strptime(e["time"], "%Y-%m-%d %H:%M:%S")
+        except Exception:
+            continue
+        e_year, e_week, _ = dt.date().isocalendar()
+        if (e_year, e_week) == (iso_year, iso_week):
+            counts[WEEKDAY_KEYS[dt.weekday()]] += 1
+    return counts
+
+def count_auto_shutdowns_by_month_week():
+    """Real automatic-shutdown events grouped by week-of-month for the
+    CURRENT calendar month, derived from event_logs timestamps."""
+    counts = {k: 0 for k in MONTH_WEEK_KEYS}
+    today = date.today()
+    for e in event_logs:
+        if AUTO_SHUTDOWN_EVENT_TEXT not in e.get("event", ""):
+            continue
+        try:
+            dt = datetime.strptime(e["time"], "%Y-%m-%d %H:%M:%S")
+        except Exception:
+            continue
+        if dt.year == today.year and dt.month == today.month:
+            bucket = MONTH_WEEK_KEYS[min((dt.day - 1) // 7, 4)]
+            counts[bucket] += 1
+    return counts
+
+def count_auto_shutdowns_total():
+    """Real automatic-shutdown event count currently held in event_logs."""
+    return sum(1 for e in event_logs if AUTO_SHUTDOWN_EVENT_TEXT in e.get("event", ""))
+
+class NumberedCanvas(pdfcanvas.Canvas):
+    """Adds a consistent footer (system name, institution, generated date/time)
+    and a 'Page X of Y' page number to every page of every report."""
+    def __init__(self, *args, **kwargs):
+        pdfcanvas.Canvas.__init__(self, *args, **kwargs)
+        self._saved_page_states = []
+
+    def showPage(self):
+        self._saved_page_states.append(dict(self.__dict__))
+        self._startPage()
+
+    def save(self):
+        total_pages = len(self._saved_page_states)
+        for state in self._saved_page_states:
+            self.__dict__.update(state)
+            self._draw_footer(total_pages)
+            pdfcanvas.Canvas.showPage(self)
+        pdfcanvas.Canvas.save(self)
+
+    def _draw_footer(self, total_pages):
+        self.saveState()
+        self.setFont("Helvetica", 8)
+        self.setFillColor(colors.grey)
+        page_width = self._pagesize[0]
+        self.drawString(30, 20, "Smart Energy Saving System | University of Sialkot")
+        self.drawCentredString(page_width / 2, 20, f"Generated: {time.strftime('%d-%m-%Y %H:%M')}")
+        self.drawRightString(page_width - 30, 20, f"Page {self._pageNumber} of {total_pages}")
+        self.restoreState()
 
 def create_weekly_pdf():
 
@@ -714,10 +884,10 @@ def create_weekly_pdf():
 
     story = []
 
-    total_hours = round(energy_saved_seconds / 3600, 2)
-    total_kwh = round(energy_saved_kwh, 2)
-    auto_off = len(event_logs)
-    cost_saved = round(total_kwh * 67)
+    total_hours = round(sum(weekly_energy_data.values()), 2)
+    total_kwh = round((DEVICE_POWER_WATTS * total_hours) / 1000, 3)
+    auto_off = sum(count_auto_shutdowns_by_day().values())
+    cost_saved = round(total_kwh * ELECTRICITY_RATE_PKR_PER_KWH)
 
     # =========================
     # Title
@@ -808,13 +978,13 @@ def create_weekly_pdf():
 
     table_data = [
         ["Day", "Hours Saved"],
-        ["Mon", str(weekly_energy_data["mon"])],
-        ["Tue", str(weekly_energy_data["tue"])],
-        ["Wed", str(weekly_energy_data["wed"])],
-        ["Thu", str(weekly_energy_data["thu"])],
-        ["Fri", str(weekly_energy_data["fri"])],
-        ["Sat", str(weekly_energy_data["sat"])],
-        ["Sun", str(weekly_energy_data["sun"])]
+        ["Mon", str(round(weekly_energy_data["mon"], 2))],
+        ["Tue", str(round(weekly_energy_data["tue"], 2))],
+        ["Wed", str(round(weekly_energy_data["wed"], 2))],
+        ["Thu", str(round(weekly_energy_data["thu"], 2))],
+        ["Fri", str(round(weekly_energy_data["fri"], 2))],
+        ["Sat", str(round(weekly_energy_data["sat"], 2))],
+        ["Sun", str(round(weekly_energy_data["sun"], 2))]
     ]
 
     table = Table(table_data, colWidths=[150, 150])
@@ -834,7 +1004,8 @@ def create_weekly_pdf():
     # Auto Shutdown Graph
     # =========================
 
-    shutdowns = [5, 8, 7, 10, 12, 7, 4]
+    shutdown_counts = count_auto_shutdowns_by_day()
+    shutdowns = [shutdown_counts[k] for k in WEEKDAY_KEYS]
 
     plt.figure(figsize=(7, 3))
     plt.bar(days, shutdowns)
@@ -868,7 +1039,9 @@ def create_weekly_pdf():
             Average Daily Saving: PKR {round(cost_saved/7,2)}<br/>
             Weekly Saving: PKR {cost_saved}<br/>
             Monthly Projection: PKR {cost_saved*4}<br/>
-            Yearly Projection: PKR {cost_saved*48}
+            Yearly Projection: PKR {cost_saved*48}<br/>
+            <br/>
+            <i>Electricity Rate Assumption: {ELECTRICITY_RATE_PKR_PER_KWH} PKR/kWh</i>
             """,
             styles['BodyText']
         )
@@ -928,7 +1101,7 @@ def create_weekly_pdf():
         )
     )
 
-    doc.build(story)
+    doc.build(story, canvasmaker=NumberedCanvas)
 
     with open(pdf_file, "rb") as f:
         pdf = f.read()
@@ -940,6 +1113,36 @@ def create_weekly_pdf():
             "Content-Disposition":
             "attachment; filename=weekly_energy_report.pdf"
         }
+    )
+
+def recent_events_text(n=12):
+    """Format the most recent n real event log entries as plain text lines."""
+    recent = event_logs[-n:]
+    if not recent:
+        return "No recent events."
+    return "\n".join(
+        f"{e.get('time','')} [{e.get('level','')}] {e.get('event','')}"
+        for e in recent
+    )
+
+def make_pdf_response(text, filename):
+    """Render plain text lines into a simple PDF report and return it as a Flask response."""
+    pdf_file = "/tmp/simple_report.pdf"
+    doc = SimpleDocTemplate(pdf_file)
+    styles = getSampleStyleSheet()
+    story = []
+    for line in text.split("\n"):
+        if line.strip():
+            story.append(Paragraph(line, styles["BodyText"]))
+        else:
+            story.append(Spacer(1, 8))
+    doc.build(story, canvasmaker=NumberedCanvas)
+    with open(pdf_file, "rb") as f:
+        pdf = f.read()
+    return Response(
+        pdf,
+        mimetype="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
 
 @app.route("/export_pdf")
@@ -982,10 +1185,10 @@ def monthly_pdf_report():
     total_hours = round(energy_saved_seconds / 3600, 2)
     total_kwh = round(energy_saved_kwh, 2)
 
-    monthly_hours = round(total_hours * 30, 2)
-    monthly_kwh = round(total_kwh * 30, 2)
+    monthly_hours = round(sum(monthly_energy_data.values()), 2)
+    monthly_kwh = round((DEVICE_POWER_WATTS * monthly_hours) / 1000, 3)
 
-    monthly_cost = round(monthly_kwh * 67)
+    monthly_cost = round(monthly_kwh * ELECTRICITY_RATE_PKR_PER_KWH)
 
     human_count = sum(
         1 for e in event_logs
@@ -1002,10 +1205,8 @@ def monthly_pdf_report():
         if "Gas" in e["event"]
     )
 
-    auto_shutdowns = sum(
-        1 for e in event_logs
-        if "Device Status Changed: OFF" in e["event"]
-    )
+    monthly_shutdown_counts = count_auto_shutdowns_by_month_week()
+    auto_shutdowns = sum(monthly_shutdown_counts.values())
 
     story.append(
         Paragraph(
@@ -1050,17 +1251,15 @@ def monthly_pdf_report():
 
     story.append(Spacer(1,15))
 
-    weeks = ["Week 1","Week 2","Week 3","Week 4"]
+    energy_weeks = ["Week 1","Week 2","Week 3","Week 4","Week 5"]
 
     monthly_energy = [
-        round(monthly_kwh * 0.20, 2),
-        round(monthly_kwh * 0.25, 2),
-        round(monthly_kwh * 0.28, 2),
-        round(monthly_kwh * 0.27, 2)
+        round((DEVICE_POWER_WATTS * monthly_energy_data[k]) / 1000, 3)
+        for k in MONTH_WEEK_KEYS
     ]
 
     plt.figure(figsize=(7,3))
-    plt.plot(weeks, monthly_energy, marker="o", linewidth=3)
+    plt.plot(energy_weeks, monthly_energy, marker="o", linewidth=3)
     plt.grid(True)
     plt.title("Monthly Energy Saving Trend")
     plt.xlabel("Weeks")
@@ -1079,7 +1278,8 @@ def monthly_pdf_report():
         ["Week 1", monthly_energy[0]],
         ["Week 2", monthly_energy[1]],
         ["Week 3", monthly_energy[2]],
-        ["Week 4", monthly_energy[3]]
+        ["Week 4", monthly_energy[3]],
+        ["Week 5", monthly_energy[4]]
     ]
 
     table = Table(table_data, colWidths=[180,180])
@@ -1095,12 +1295,9 @@ def monthly_pdf_report():
 
     story.append(Spacer(1,15))
 
-    shutdowns = [
-        round(auto_shutdowns * 0.20),
-        round(auto_shutdowns * 0.25),
-        round(auto_shutdowns * 0.28),
-        round(auto_shutdowns * 0.27)
-    ]
+    weeks = ["Week 1","Week 2","Week 3","Week 4","Week 5"]
+
+    shutdowns = [monthly_shutdown_counts[k] for k in MONTH_WEEK_KEYS]
 
     plt.figure(figsize=(7,3))
     plt.bar(weeks, shutdowns)
@@ -1129,7 +1326,9 @@ def monthly_pdf_report():
             f"""
             Average Daily Saving: PKR {round(monthly_cost/30,2)}<br/>
             Monthly Saving: PKR {monthly_cost}<br/>
-            Yearly Projection: PKR {monthly_cost*12}
+            Yearly Projection: PKR {monthly_cost*12}<br/>
+            <br/>
+            <i>Electricity Rate Assumption: {ELECTRICITY_RATE_PKR_PER_KWH} PKR/kWh</i>
             """,
             styles['BodyText']
         )
@@ -1185,7 +1384,7 @@ def monthly_pdf_report():
         )
     )
 
-    doc.build(story)
+    doc.build(story, canvasmaker=NumberedCanvas)
 
     with open(pdf_file, "rb") as f:
         pdf = f.read()
@@ -1210,7 +1409,7 @@ def full_pdf_report():
 
     total_hours = round(energy_saved_seconds / 3600, 2)
     total_kwh = round(energy_saved_kwh, 2)
-    cost_saved = round(total_kwh * 67)
+    cost_saved = round(total_kwh * ELECTRICITY_RATE_PKR_PER_KWH)
 
     human_count = sum(
         1 for e in event_logs
@@ -1227,10 +1426,7 @@ def full_pdf_report():
         if "Gas" in e["event"]
     )
 
-    auto_shutdowns = sum(
-        1 for e in event_logs
-        if "Device Status Changed: OFF" in e["event"]
-    )
+    auto_shutdowns = count_auto_shutdowns_total()
 
     cpu = psutil.cpu_percent()
     ram = psutil.virtual_memory().percent
@@ -1285,6 +1481,8 @@ def full_pdf_report():
     plt.figure(figsize=(6,2.5))
     plt.plot(days, weekly_values, marker="o")
     plt.title("Weekly Energy Saving")
+    plt.xlabel("Days")
+    plt.ylabel("Hours Saved")
     plt.tight_layout()
 
     weekly_graph = "/tmp/weekly_graph.png"
@@ -1298,18 +1496,18 @@ def full_pdf_report():
     # MONTHLY GRAPH
     # ==========================
 
-    weeks = ["W1","W2","W3","W4"]
+    weeks = ["W1","W2","W3","W4","W5"]
 
     monthly_values = [
-        round(total_kwh * 0.20,2),
-        round(total_kwh * 0.25,2),
-        round(total_kwh * 0.28,2),
-        round(total_kwh * 0.27,2)
+        round((DEVICE_POWER_WATTS * monthly_energy_data[k]) / 1000, 3)
+        for k in MONTH_WEEK_KEYS
     ]
 
     plt.figure(figsize=(6,2.5))
     plt.plot(weeks, monthly_values, marker="o")
     plt.title("Monthly Energy Saving")
+    plt.xlabel("Weeks")
+    plt.ylabel("kWh Saved")
     plt.tight_layout()
 
     monthly_graph = "/tmp/monthly_graph.png"
@@ -1335,7 +1533,9 @@ def full_pdf_report():
             Total Energy Saved: <b>{total_kwh} kWh</b><br/>
             Runtime Saved: <b>{total_hours} Hours</b><br/>
             Estimated Cost Saving: <b>PKR {cost_saved}</b><br/>
-            Auto Shutdown Events: <b>{auto_shutdowns}</b>
+            Auto Shutdown Events: <b>{auto_shutdowns}</b><br/>
+            <br/>
+            <i>Electricity Rate Assumption: {ELECTRICITY_RATE_PKR_PER_KWH} PKR/kWh</i>
             """,
             styles["BodyText"]
         )
@@ -1366,10 +1566,15 @@ def full_pdf_report():
 
     story.append(Spacer(1,20))
 
-    device_table = Table([
-        ["Device","Power","Status"],
-        [DEVICE_NAME,f"{DEVICE_POWER_WATTS}W",latest_data.get("device")]
-    ])
+    device_table_data = [["Device","Power","Status"]]
+    for d in DEVICES:
+        device_table_data.append([
+            d.get("name", ""),
+            f"{d.get('power', 0)}W",
+            d.get("status", "Not Installed")
+        ])
+
+    device_table = Table(device_table_data)
 
     device_table.setStyle(TableStyle([
         ('BACKGROUND',(0,0),(-1,0),colors.grey),
@@ -1442,13 +1647,15 @@ def full_pdf_report():
         Paragraph("LAST 10 EVENT LOGS", styles["Heading1"])
     )
 
+    log_cell_style = ParagraphStyle("LogCell", parent=styles["BodyText"], fontSize=8, leading=10)
+
     log_data = [["Time","Level","Event"]]
 
     for e in event_logs[-10:]:
         log_data.append([
             str(e.get("time","")),
             str(e.get("level","")),
-            str(e.get("event",""))
+            Paragraph(str(e.get("event","")), log_cell_style)
         ])
 
     log_table = Table(
@@ -1498,7 +1705,7 @@ def full_pdf_report():
         )
     )
 
-    doc.build(story)
+    doc.build(story, canvasmaker=NumberedCanvas)
 
     with open(pdf_file, "rb") as f:
         pdf = f.read()

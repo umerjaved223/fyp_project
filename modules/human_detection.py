@@ -2,8 +2,18 @@ from ultralytics import YOLO
 from modules.camera_manager import get_frame
 import cv2
 import time
+import os
+import traceback
 
-model = YOLO("yolov8n.pt")
+MODEL_PATH = "yolov8n.pt"
+
+try:
+    model = YOLO(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
+    if model is None:
+        print("YOLO model file not found, detection unavailable:", MODEL_PATH)
+except Exception as e:
+    print("YOLO model load error, detection unavailable:", e)
+    model = None
 
 previous_gray = None
 idle_start_time = None
@@ -32,6 +42,9 @@ def draw_red_box(frame, box, label):
 
 def detect_human():
     global previous_gray, idle_start_time, latest_display_frame
+
+    if model is None:
+        return "Detection Unavailable", "Detection Unavailable"
 
     try:
         frame = get_frame()
@@ -125,6 +138,7 @@ def detect_human():
 
     except Exception as e:
         print("Detection Error:", e)
+        traceback.print_exc()
         return "Error", "Error"
 
 

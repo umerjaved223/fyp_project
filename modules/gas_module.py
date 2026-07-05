@@ -18,7 +18,7 @@ GAS_PIN = 22
 RELAY_PIN = 27
 BUZZER_PIN = 24
 
-gas_sensor = DigitalInputDevice(GAS_PIN, pull_up=False)
+gas_sensor = DigitalInputDevice(GAS_PIN, pull_up=True)
 relay = DigitalOutputDevice(RELAY_PIN, active_high=False)
 buzzer = DigitalOutputDevice(BUZZER_PIN)
 
@@ -146,10 +146,19 @@ def send_test_email(to_email=None):
 
 
 # ================= MAIN FUNCTION (Flask calls this) =================
-def check_gas():
+def check_gas(suppress=False):
+    """Reads the real sensor state. When suppress=True (active grace period
+    after a Reset), all side effects (buzzer, email) are skipped and the
+    status is reported as Safe, regardless of the real sensor reading, so a
+    still-present leak is treated as a fresh detection once suppression ends."""
     global email_sent
 
-    if not gas_sensor.value:   # GAS DETECTED
+    if gas_sensor.value:   # GAS DETECTED
+        if suppress:
+            stop_alarm()
+            email_sent = False
+            return "Safe"
+
         start_alarm()
 
         if not email_sent:
@@ -174,3 +183,12 @@ def check_gas():
         stop_alarm()
         email_sent = False
         return "Safe"
+
+def clear_gas_alert():
+    """Called immediately when Reset Gas is pressed: silences the buzzer now
+    and clears the email latch so a still-present leak can trigger a fresh
+    alert once the grace period ends (no already-sent email can be recalled,
+    but no new one will be queued until suppression is lifted)."""
+    global email_sent
+    stop_alarm()
+    email_sent = False
