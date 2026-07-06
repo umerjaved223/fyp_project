@@ -1,1504 +1,1039 @@
 {
-    "energy_saved_seconds": 2665.415067911148,
-    "energy_saved_kwh": 0.074,
+    "energy_saved_seconds": 611.728645324707,
+    "energy_saved_kwh": 0.017,
     "event_logs": [
         {
-            "time": "2026-07-05 15:30:45",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:30:47",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:30:47",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:30:48",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:30:48",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:30:50",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:30:50",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:30:51",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:30:51",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:30:55",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:31:12",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:31:39",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:31:48",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:31:51",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:31:54",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:31:54",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:31:54",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:31:59",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:31:59",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:32:00",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:32:00",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:32:01",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:32:01",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:32:02",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:32:02",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:32:05",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:32:05",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:32:13",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:32:14",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:32:17",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:32:17",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:32:59",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:33:12",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:33:14",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:33:14",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:33:20",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:33:20",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:33:24",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:33:24",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:33:26",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:33:26",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:33:27",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:33:27",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:33:28",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:33:28",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:33:30",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:33:30",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:33:33",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:33:33",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:33:37",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:33:37",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:33:41",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:34:17",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:34:38",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:34:38",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:34:49",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Idle"
-        },
-        {
-            "time": "2026-07-05 15:35:13",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:35:22",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Idle"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Sleeping Worker"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:35:48",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 15:36:47",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:36:47",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:36:51",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:36:51",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:37:01",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Idle"
-        },
-        {
-            "time": "2026-07-05 15:37:33",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Sleeping Worker"
-        },
-        {
-            "time": "2026-07-05 15:38:04",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:38:04",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:38:09",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:38:09",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:38:18",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Idle"
-        },
-        {
-            "time": "2026-07-05 15:38:32",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Sleeping Worker"
-        },
-        {
-            "time": "2026-07-05 15:38:36",
+            "time": "2026-07-06 20:56:28",
             "level": "SUCCESS",
             "event": "Device ON (Manual)"
         },
         {
-            "time": "2026-07-05 15:38:37",
-            "level": "SUCCESS",
-            "event": "Device Status Changed: ON"
-        },
-        {
-            "time": "2026-07-05 15:38:38",
+            "time": "2026-07-06 20:56:38",
             "level": "WARNING",
             "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 15:38:39",
-            "level": "WARNING",
-            "event": "Device Status Changed: OFF"
-        },
-        {
-            "time": "2026-07-05 15:42:43",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:42:52",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:42:52",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:42:53",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:42:53",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:43:03",
+            "time": "2026-07-06 20:57:23",
             "level": "INFO",
             "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:43:03",
-            "level": "INFO",
-            "event": "Human Status Changed: Detection Disabled"
-        },
-        {
-            "time": "2026-07-05 15:43:08",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Idle"
-        },
-        {
-            "time": "2026-07-05 15:43:21",
+            "time": "2026-07-06 20:57:27",
             "level": "INFO",
             "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:43:33",
+            "time": "2026-07-06 21:41:59",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:18",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:26",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:26",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:29",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:29",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:30",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:30",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:32",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:32",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:34",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:34",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:36",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:36",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:37",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:37",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:41",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:41",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:43",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:43",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:50",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:50",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:51",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:51",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:52",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:52",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:54",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:54",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:57",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:57",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:42:58",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:42:58",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:42:59",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:42:59",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:00",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:00",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:43:01",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:43:01",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:02",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:02",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:43:03",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:43:03",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:05",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:05",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:43:06",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:43:06",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:07",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:07",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:43:09",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:43:09",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:16",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:16",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:43:17",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:43:17",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:26",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:26",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:43:28",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:43:28",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:30",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:30",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:43:31",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:43:31",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:43:34",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:43:34",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 21:54:36",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 21:54:41",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 21:54:41",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 21:54:41",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 22:10:09",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 22:10:20",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 22:10:21",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 22:10:21",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 22:43:52",
             "level": "INFO",
             "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:43:40",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Sleeping Worker"
-        },
-        {
-            "time": "2026-07-05 15:43:58",
+            "time": "2026-07-06 22:44:10",
             "level": "INFO",
             "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:44:00",
+            "time": "2026-07-06 22:44:19",
             "level": "INFO",
             "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:44:12",
+            "time": "2026-07-06 22:44:33",
             "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:44:12",
+            "time": "2026-07-06 22:45:37",
             "level": "INFO",
-            "event": "Worker Activity Changed: Worker Idle"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:44:13",
+            "time": "2026-07-06 22:45:41",
             "level": "INFO",
-            "event": "Worker Activity Changed: Sleeping Worker"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:44:36",
+            "time": "2026-07-06 22:45:47",
             "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:45:45",
+            "time": "2026-07-06 22:47:15",
             "level": "INFO",
-            "event": "Human Status Changed: No Human"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 15:45:57",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:46:03",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:46:03",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:46:06",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:46:06",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:49:22",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:49:22",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:49:29",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:49:29",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:49:30",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:49:30",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:49:36",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:49:36",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:49:37",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:49:37",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:05",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:05",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:13",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:14",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:14",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:14",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:17",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:17",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:18",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:18",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:27",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:27",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:28",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:28",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:36",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:36",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:38",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:38",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:42",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:42",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:46",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:46",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:47",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:47",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:50",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:50",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:51",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:51",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:52",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:52",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:54",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:54",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:50:56",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:50:56",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:50:59",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:50:59",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:51:00",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:51:00",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:51:06",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:51:06",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:51:07",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:51:07",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 15:52:00",
-            "level": "WARNING",
-            "event": "Energy Statistics Reset"
-        },
-        {
-            "time": "2026-07-05 15:52:21",
+            "time": "2026-07-06 22:52:44",
             "level": "SUCCESS",
             "event": "Device ON (Manual)"
         },
         {
-            "time": "2026-07-05 15:52:22",
+            "time": "2026-07-06 22:52:45",
             "level": "SUCCESS",
             "event": "Device Status Changed: ON"
         },
         {
-            "time": "2026-07-05 15:53:12",
+            "time": "2026-07-06 22:53:05",
             "level": "WARNING",
             "event": "Automatic Shutdown - No Human Detected"
         },
         {
-            "time": "2026-07-05 15:53:12",
+            "time": "2026-07-06 22:53:05",
             "level": "WARNING",
             "event": "Device Status Changed: OFF"
         },
         {
-            "time": "2026-07-05 15:54:16",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 15:54:16",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 15:54:20",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 15:54:20",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 16:00:22",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:00:33",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:01:01",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:01:07",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:01:13",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:01:20",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:01:32",
+            "time": "2026-07-06 23:03:16",
             "level": "SUCCESS",
             "event": "Device ON (Manual)"
         },
         {
-            "time": "2026-07-05 16:01:33",
+            "time": "2026-07-06 23:03:16",
             "level": "SUCCESS",
             "event": "Device Status Changed: ON"
         },
         {
-            "time": "2026-07-05 16:01:34",
+            "time": "2026-07-06 23:03:23",
             "level": "WARNING",
             "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 16:01:35",
+            "time": "2026-07-06 23:03:45",
             "level": "WARNING",
             "event": "Device Status Changed: OFF"
         },
         {
-            "time": "2026-07-05 16:01:51",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:04:44",
-            "level": "SUCCESS",
-            "event": "Device ON (Manual)"
-        },
-        {
-            "time": "2026-07-05 16:04:45",
-            "level": "SUCCESS",
-            "event": "Device Status Changed: ON"
-        },
-        {
-            "time": "2026-07-05 16:04:45",
+            "time": "2026-07-06 23:08:06",
             "level": "WARNING",
             "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 16:04:49",
-            "level": "WARNING",
-            "event": "Device Status Changed: OFF"
-        },
-        {
-            "time": "2026-07-05 16:05:05",
-            "level": "SUCCESS",
-            "event": "Device ON (Manual)"
-        },
-        {
-            "time": "2026-07-05 16:05:05",
-            "level": "SUCCESS",
-            "event": "Device Status Changed: ON"
-        },
-        {
-            "time": "2026-07-05 16:05:05",
+            "time": "2026-07-06 23:08:15",
             "level": "WARNING",
             "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 16:05:07",
-            "level": "WARNING",
-            "event": "Device Status Changed: OFF"
-        },
-        {
-            "time": "2026-07-05 16:05:45",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 16:06:11",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 16:06:11",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Sleeping Worker"
-        },
-        {
-            "time": "2026-07-05 16:06:13",
-            "level": "WARNING",
-            "event": "Service Restart Requested From Dashboard"
-        },
-        {
-            "time": "2026-07-05 16:06:17",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 16:06:17",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 16:06:21",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 16:06:21",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 16:06:28",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 16:06:28",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 16:15:55",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:15:58",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:16:03",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:16:09",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:16:14",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:16:35",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:16:36",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:16:43",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:16:51",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:17:10",
-            "level": "INFO",
-            "event": "Settings Updated"
-        },
-        {
-            "time": "2026-07-05 16:17:29",
-            "level": "SUCCESS",
-            "event": "Device ON (Manual)"
-        },
-        {
-            "time": "2026-07-05 16:17:29",
-            "level": "SUCCESS",
-            "event": "Device Status Changed: ON"
-        },
-        {
-            "time": "2026-07-05 16:17:39",
-            "level": "WARNING",
-            "event": "Automatic Shutdown - No Human Detected"
-        },
-        {
-            "time": "2026-07-05 16:17:49",
-            "level": "WARNING",
-            "event": "Device Status Changed: OFF"
-        },
-        {
-            "time": "2026-07-05 16:18:39",
-            "level": "SUCCESS",
-            "event": "Device ON (Manual)"
-        },
-        {
-            "time": "2026-07-05 16:18:40",
-            "level": "SUCCESS",
-            "event": "Device Status Changed: ON"
-        },
-        {
-            "time": "2026-07-05 16:18:41",
+            "time": "2026-07-06 23:08:34",
             "level": "WARNING",
             "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 16:18:41",
+            "time": "2026-07-06 23:15:23",
             "level": "WARNING",
-            "event": "Device Status Changed: OFF"
+            "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 16:18:50",
+            "time": "2026-07-06 23:15:23",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:32",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:45",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:50",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:50",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:15:55",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:04",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:04",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:16",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:20",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:20",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:20",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:21",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:21",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:21",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:32:21",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:34:31",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-06 23:45:48",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 23:45:48",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 23:45:58",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 23:45:58",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 23:47:27",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 23:47:54",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 23:48:04",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 23:48:04",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 23:49:44",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 23:49:44",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 23:49:54",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 23:49:54",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 23:51:39",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 23:51:39",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 23:51:50",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 23:51:50",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 23:51:59",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 23:51:59",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 23:52:01",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 23:52:01",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-06 23:52:53",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-06 23:53:05",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-06 23:53:05",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-06 23:53:05",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-07 00:25:33",
+            "level": "SUCCESS",
+            "event": "Device ON (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:25:33",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:25:39",
             "level": "INFO",
             "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 16:23:36",
-            "level": "SUCCESS",
-            "event": "Device ON (Manual)"
-        },
-        {
-            "time": "2026-07-05 16:23:36",
-            "level": "SUCCESS",
-            "event": "Device Status Changed: ON"
-        },
-        {
-            "time": "2026-07-05 16:23:41",
+            "time": "2026-07-07 00:26:49",
             "level": "WARNING",
             "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 16:23:41",
-            "level": "WARNING",
-            "event": "Device Status Changed: OFF"
-        },
-        {
-            "time": "2026-07-05 16:24:30",
+            "time": "2026-07-07 00:32:59",
             "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 16:24:46",
+            "time": "2026-07-07 00:33:13",
             "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 16:24:46",
+            "time": "2026-07-07 00:33:39",
             "level": "INFO",
-            "event": "Human Status Changed: No Human"
+            "event": "Settings Updated"
         },
         {
-            "time": "2026-07-05 16:24:46",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 16:24:56",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 16:24:56",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 16:24:58",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 16:24:58",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 16:26:52",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 16:26:52",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 16:26:56",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 16:26:56",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:45:38",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:45:54",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:45:54",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:45:54",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:45:55",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:45:55",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:45:59",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:45:59",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:46:06",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:46:06",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:46:07",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:46:07",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:46:36",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:46:49",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:46:59",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:46:59",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:47:01",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:47:01",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:47:02",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:47:02",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:47:03",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:47:03",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:47:04",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:47:04",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:47:05",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:47:05",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:47:06",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:47:06",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:47:07",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:47:07",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:47:08",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:47:08",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:47:10",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:47:10",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:47:12",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:47:12",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:47:13",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:47:13",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:47:14",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:47:14",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:47:17",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:47:17",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:47:18",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:47:20",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:53:09",
-            "level": "INFO",
-            "event": "Human Status Changed: Human Detected"
-        },
-        {
-            "time": "2026-07-05 20:53:09",
-            "level": "INFO",
-            "event": "Worker Activity Changed: Worker Working"
-        },
-        {
-            "time": "2026-07-05 20:53:10",
-            "level": "INFO",
-            "event": "Human Status Changed: No Human"
-        },
-        {
-            "time": "2026-07-05 20:53:10",
-            "level": "INFO",
-            "event": "Worker Activity Changed: No Worker"
-        },
-        {
-            "time": "2026-07-05 20:56:38",
+            "time": "2026-07-07 00:34:43",
             "level": "SUCCESS",
             "event": "Device ON (Manual)"
         },
         {
-            "time": "2026-07-05 20:56:43",
-            "level": "SUCCESS",
-            "event": "Device Status Changed: ON"
-        },
-        {
-            "time": "2026-07-05 20:56:52",
+            "time": "2026-07-07 00:34:43",
             "level": "WARNING",
             "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 20:56:52",
+            "time": "2026-07-07 00:34:43",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:36:37",
+            "level": "SUCCESS",
+            "event": "Device ON (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:36:37",
             "level": "WARNING",
-            "event": "Device Status Changed: OFF"
+            "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 20:58:09",
+            "time": "2026-07-07 00:39:56",
             "level": "SUCCESS",
             "event": "Device ON (Manual)"
         },
         {
-            "time": "2026-07-05 20:58:24",
+            "time": "2026-07-07 00:39:56",
             "level": "SUCCESS",
             "event": "Device ON (Manual)"
         },
         {
-            "time": "2026-07-05 20:58:39",
+            "time": "2026-07-07 00:39:56",
+            "level": "SUCCESS",
+            "event": "Device ON (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:39:56",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:39:57",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:40:00",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:40:06",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:40:14",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:40:54",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:51:39",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:52:03",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:52:09",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:52:17",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:52:17",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Detection Disabled"
+        },
+        {
+            "time": "2026-07-07 00:52:24",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:52:24",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-07 00:52:32",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:52:32",
+            "level": "INFO",
+            "event": "Gas Status Changed: Gas Disabled"
+        },
+        {
+            "time": "2026-07-07 00:52:52",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:52:53",
+            "level": "INFO",
+            "event": "Gas Status Changed: Safe"
+        },
+        {
+            "time": "2026-07-07 00:52:59",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:53:03",
+            "level": "SUCCESS",
+            "event": "Test Email Sent"
+        },
+        {
+            "time": "2026-07-07 00:53:17",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:53:22",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:53:34",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:54:01",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 00:57:02",
+            "level": "INFO",
+            "event": "Human Status Changed: Human Detected"
+        },
+        {
+            "time": "2026-07-07 00:57:09",
+            "level": "INFO",
+            "event": "Worker Activity Changed: Worker Working"
+        },
+        {
+            "time": "2026-07-07 00:57:09",
+            "level": "INFO",
+            "event": "Human Status Changed: No Human"
+        },
+        {
+            "time": "2026-07-07 00:57:09",
+            "level": "INFO",
+            "event": "Worker Activity Changed: No Worker"
+        },
+        {
+            "time": "2026-07-07 00:58:36",
+            "level": "SUCCESS",
+            "event": "Device ON (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:58:36",
+            "level": "WARNING",
+            "event": "Device OFF (Manual)"
+        },
+        {
+            "time": "2026-07-07 00:58:36",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:05:33",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:05:37",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:32:41",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:32:47",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:33:12",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:33:22",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:33:35",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:33:42",
+            "level": "INFO",
+            "event": "Settings Updated"
+        },
+        {
+            "time": "2026-07-07 01:33:46",
+            "level": "SUCCESS",
+            "event": "Device ON (Manual)"
+        },
+        {
+            "time": "2026-07-07 01:33:47",
             "level": "SUCCESS",
             "event": "Device Status Changed: ON"
         },
         {
-            "time": "2026-07-05 20:58:45",
+            "time": "2026-07-07 01:33:48",
             "level": "WARNING",
-            "event": "Automatic Shutdown - No Human Detected"
+            "event": "Device OFF (Manual)"
         },
         {
-            "time": "2026-07-05 20:58:45",
+            "time": "2026-07-07 01:33:49",
             "level": "WARNING",
             "event": "Device Status Changed: OFF"
         }
@@ -1510,271 +1045,271 @@
         "device": "OFF"
     },
     "weekly_energy_data": {
-        "mon": 0,
+        "mon": 0.1699246237013075,
         "tue": 0,
         "wed": 0,
         "thu": 0,
         "fri": 0,
         "sat": 0,
-        "sun": 0.822334511147605
+        "sun": 0
     },
     "monthly_energy_data": {
-        "week1": 0.822334511147605,
+        "week1": 1.0417595120271033,
         "week2": 0,
         "week3": 0,
         "week4": 0,
         "week5": 0
     },
-    "weekly_period_key": "2026-W27",
+    "weekly_period_key": "2026-W28",
     "monthly_period_key": "2026-07",
     "activity_history": [
         {
-            "time": "21:32:20",
+            "time": "01:40:37",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:21",
+            "time": "01:40:38",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:22",
+            "time": "01:40:39",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:23",
+            "time": "01:40:40",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:24",
+            "time": "01:40:41",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:25",
+            "time": "01:40:42",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:26",
+            "time": "01:40:43",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:27",
+            "time": "01:40:44",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:28",
+            "time": "01:40:45",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:29",
+            "time": "01:40:46",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:30",
+            "time": "01:40:47",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:31",
+            "time": "01:40:48",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:32",
+            "time": "01:40:49",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:33",
+            "time": "01:40:50",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:34",
+            "time": "01:40:51",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:35",
+            "time": "01:40:52",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:36",
+            "time": "01:40:53",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:37",
+            "time": "01:40:54",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:38",
+            "time": "01:40:55",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:39",
+            "time": "01:40:56",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:40",
+            "time": "01:40:57",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:41",
+            "time": "01:40:58",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:42",
+            "time": "01:40:59",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:43",
+            "time": "01:41:00",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:44",
+            "time": "01:41:01",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:45",
+            "time": "01:41:02",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:46",
+            "time": "01:41:03",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:47",
+            "time": "01:41:04",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:48",
+            "time": "01:41:05",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:49",
+            "time": "01:41:06",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:50",
+            "time": "01:41:07",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:51",
+            "time": "01:41:08",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:52",
+            "time": "01:41:09",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:53",
+            "time": "01:41:10",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:54",
+            "time": "01:41:11",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:55",
+            "time": "01:41:12",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:56",
+            "time": "01:41:13",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:57",
+            "time": "01:41:14",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:32:58",
+            "time": "01:41:15",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:07",
+            "time": "01:41:16",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:07",
+            "time": "01:41:17",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:08",
+            "time": "01:41:18",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:09",
+            "time": "01:41:19",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:10",
+            "time": "01:41:20",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:11",
+            "time": "01:41:21",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:12",
+            "time": "01:41:22",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:13",
+            "time": "01:41:23",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:14",
+            "time": "01:41:24",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:15",
+            "time": "01:41:25",
             "human": 0,
             "worker": 0
         },
         {
-            "time": "21:33:16",
+            "time": "01:41:26",
             "human": 0,
             "worker": 0
         }

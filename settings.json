@@ -17,39 +17,15 @@
     "auto_logout_minutes": 15,
     "theme": "Dark",
     "alert_email_to": "umergujjarg391@gmail.com",
-    "last_email_sent": "No Alerts Sent",
+    "last_email_sent": "2026-07-07 00:53:00",
     "devices": [
         {
-            "available": true,
-            "enabled": true,
+            "relay": 1,
             "name": "Bulb",
             "power": 100,
-            "relay": 1,
+            "enabled": true,
+            "available": true,
             "status": "OFF"
-        },
-        {
-            "available": false,
-            "enabled": false,
-            "name": "Fan",
-            "power": 75,
-            "relay": 2,
-            "status": "Not Installed"
-        },
-        {
-            "available": false,
-            "enabled": false,
-            "name": "AC",
-            "power": 1500,
-            "relay": 3,
-            "status": "Not Installed"
-        },
-        {
-            "available": false,
-            "enabled": false,
-            "name": "Custom Device",
-            "power": 100,
-            "relay": 4,
-            "status": "Not Installed"
         }
     ]
 }

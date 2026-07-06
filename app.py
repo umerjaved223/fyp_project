@@ -1,11 +1,15 @@
 from flask import Flask, render_template, jsonify, Response, request, redirect, session
 from flask_cors import CORS
-from modules.gas_module import check_gas, relay, set_alert_email, get_alert_email, get_last_email_time, send_test_email, clear_gas_alert
+from modules.gas_module import check_gas, relay, set_alert_email, get_last_email_time, send_test_email, clear_gas_alert
+
 from modules.human_detection import detect_human
 from modules.energy_module import update_energy
 from modules.camera_manager import get_frame
 from datetime import timedelta, date, datetime
 import cv2, time, threading, psutil, os, json, csv, io, re, subprocess
+
+
+
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -23,6 +27,9 @@ DATA_DIR = "/home/ruf/fyp_project/data"
 RUNTIME_DATA_FILE = os.path.join(DATA_DIR, "runtime_data.json")
 runtime_save_lock = threading.Lock()
 
+
+
+
 latest_human = "No Human"
 latest_worker_activity = "No Worker"
 last_email_alert = "No Alerts Sent"
@@ -30,6 +37,11 @@ activity_history = []
 event_logs = []
 last_event_state = {"human": None, "worker": None, "gas": None, "device": None}
 energy_saved_kwh = 0
+
+# NOTE: This file is frequently polled by the frontend while background threads
+# update shared state. Keep modifications minimal and preserve request/response
+# behavior.
+
 weekly_energy_data = {
     "mon": 0,
     "tue": 0,
@@ -94,6 +106,8 @@ latest_data = {
 def save_runtime_data():
     """Save live data so service restart does not clear reports/logs."""
     try:
+        # Avoid repeated, identical writes under frequent polling.
+        # Runtime data is mutable, so we only debounce exact JSON payloads.
         with runtime_save_lock:
             os.makedirs(DATA_DIR, exist_ok=True)
             data = {
@@ -107,18 +121,31 @@ def save_runtime_data():
                 "monthly_period_key": monthly_period_key,
                 "activity_history": activity_history[-50:]
             }
+            new_json = json.dumps(data, indent=4, sort_keys=True)
+
+            last_json = getattr(save_runtime_data, "_last_json", None)
+            if last_json is not None and last_json == new_json:
+                return
+            save_runtime_data._last_json = new_json
+
             tmp_file = RUNTIME_DATA_FILE + ".tmp"
             with open(tmp_file, "w") as f:
-                json.dump(data, f, indent=4)
+                f.write(new_json)
             os.replace(tmp_file, RUNTIME_DATA_FILE)
     except Exception as e:
         print("Runtime save error:", e)
+
+
+
 
 def valid_email(email):
     return bool(re.match(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$", str(email or "").strip()))
 
 def add_event(event, level="INFO"):
     """Save only important status changes, not every second."""
+    if PERF_DEBUG:
+        t0 = _perf_now()
+
     event_logs.append({
         "time": time.strftime("%Y-%m-%d %H:%M:%S"),
         "level": level,
@@ -127,6 +154,11 @@ def add_event(event, level="INFO"):
     if len(event_logs) > 300:
         event_logs.pop(0)
     save_runtime_data()
+
+    if PERF_DEBUG:
+        t1 = _perf_now()
+        PERF_STATS["add_event"].append(_perf_ms(t0, t1))
+
 
 def add_event_if_changed(key, value, message, level="INFO"):
     if last_event_state.get(key) != value:
@@ -403,23 +435,62 @@ def system_loop():
 @app.route("/manual_on")
 def manual_on():
     global system_armed, device_on, last_human_time, auto_energy_mode
+
+    if PERF_DEBUG:
+        req0 = _perf_now()
+        t_relay0 = _perf_now()
+
     system_armed = True
     device_on = True
     auto_energy_mode = False
     last_human_time = time.time()
+
     relay.on()
+
+    if PERF_DEBUG:
+        t_relay1 = _perf_now()
+        PERF_STATS["relay"].append(_perf_ms(t_relay0, t_relay1))
+
+        # add_event() is timed separately, but capture total request too.
+        res = "ON"
+        t_end = _perf_now()
+        PERF_STATS["manual_on"].append(_perf_ms(req0, t_end))
+        PERF_STATS["request"].append(_perf_ms(req0, t_end))
+        add_event("Device ON (Manual)", "SUCCESS")
+        # Note: order preserved (add_event after relay) and return same.
+        return res
+
     add_event("Device ON (Manual)", "SUCCESS")
     return "ON"
+
 
 @app.route("/manual_off")
 def manual_off():
     global system_armed, device_on, auto_energy_mode
+
+    if PERF_DEBUG:
+        req0 = _perf_now()
+        t_relay0 = _perf_now()
+
     system_armed = False
     device_on = False
     auto_energy_mode = False
+
     relay.off()
+
+    if PERF_DEBUG:
+        t_relay1 = _perf_now()
+        PERF_STATS["relay"].append(_perf_ms(t_relay0, t_relay1))
+        res = "OFF"
+        add_event("Device OFF (Manual)", "WARNING")
+        t_end = _perf_now()
+        PERF_STATS["manual_off"].append(_perf_ms(req0, t_end))
+        PERF_STATS["request"].append(_perf_ms(req0, t_end))
+        return res
+
     add_event("Device OFF (Manual)", "WARNING")
     return "OFF"
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
