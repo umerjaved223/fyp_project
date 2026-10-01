@@ -1,0 +1,25 @@
+# Core
+Flask==3.0.0
+Werkzeug==3.0.1
+Jinja2==3.1.2
+
+# AI / Computer Vision (CPU-ONLY — no CUDA, no GPU)
+ultralytics==8.3.0
+opencv-python==4.10.0.84
+numpy==1.26.4
+torch==2.2.2
+torchvision==0.17.2
+
+# Hardware (Raspberry Pi)
+gpiozero==2.0
+picamera2==0.3.12
+smbus2==0.4.3
+
+# Utilities
+python-dotenv==1.0.0
+requests==2.31.0
+Pillow==10.3.0
+email-validator==2.1.0
+
+# Reports
+reportlab==4.1.0
